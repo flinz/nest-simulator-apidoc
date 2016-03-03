@@ -1,0 +1,38 @@
+ConnPlotter package
+===================
+
+Submodules
+----------
+
+ConnPlotter.ConnPlotter module
+------------------------------
+
+.. automodule:: ConnPlotter.ConnPlotter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ConnPlotter.colormaps module
+----------------------------
+
+.. automodule:: ConnPlotter.colormaps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ConnPlotter.tcd_nest module
+---------------------------
+
+.. automodule:: ConnPlotter.tcd_nest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ConnPlotter
+    :members:
+    :undoc-members:
+    :show-inheritance:

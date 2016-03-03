@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.tests.test_connect_fixed_indegree &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="nest" href="../../nest.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/nest.html">nest package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../nest.html">nest</a> &raquo;</li>
+      
+    <li>nest.tests.test_connect_fixed_indegree</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nest.tests.test_connect_fixed_indegree</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># test_connect_fixed_indegree.py</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of NEST.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2004 The NEST Initiative</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with NEST.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">test_connect_helpers</span> <span class="k">as</span> <span class="n">hf</span>
+<span class="kn">from</span> <span class="nn">.test_connect_parameters</span> <span class="kn">import</span> <span class="n">TestParams</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<div class="viewcode-block" id="TestFixedInDegree"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree">[docs]</a><span class="k">class</span> <span class="nc">TestFixedInDegree</span><span class="p">(</span><span class="n">TestParams</span><span class="p">):</span>
+
+    <span class="c1"># specify connection pattern and specific params</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="s1">&#39;fixed_indegree&#39;</span>
+    <span class="n">conn_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rule&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="p">}</span>
+    <span class="c1"># sizes of source-, target-population and outdegree for connection test and tests in test_Params</span>
+    <span class="n">N1</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">N2</span> <span class="o">=</span> <span class="mi">70</span>
+    <span class="n">Nin</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">conn_dict</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Nin</span>
+    <span class="c1"># sizes of source-, target-population and outdegree for statistical test</span>
+    <span class="n">N_s</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">N_t</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># Critical values and number of iterations of two level test</span>
+    <span class="n">stat_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha2&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;n_runs&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+
+    <span class="c1"># tested on each mpi process separately</span>
+<div class="viewcode-block" id="TestFixedInDegree.testErrorMessages"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree.testErrorMessages">[docs]</a>    <span class="k">def</span> <span class="nf">testErrorMessages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">got_error</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">conn_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N1</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpNetwork</span><span class="p">(</span><span class="n">conn_params</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">got_error</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">got_error</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFixedInDegree.testInDegree"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree.testInDegree">[docs]</a>    <span class="k">def</span> <span class="nf">testInDegree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setUpNetwork</span><span class="p">(</span><span class="n">conn_params</span><span class="p">)</span>
+        <span class="c1"># make sure the indegree is right</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_connectivity_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop2</span><span class="p">)</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">mpi_assert</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N2</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># make sure no connections were drawn from the target to the source population</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_connectivity_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">pop1</span><span class="p">)</span>
+        <span class="n">M_none</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop1</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop2</span><span class="p">)))</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">mpi_assert</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">M_none</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFixedInDegree.testStatistics"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree.testStatistics">[docs]</a>    <span class="k">def</span> <span class="nf">testStatistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_expected_degrees_fixedDegrees</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_t</span><span class="p">)</span>
+        <span class="n">pvalues</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stat_dict</span><span class="p">[</span><span class="s1">&#39;n_runs&#39;</span><span class="p">]):</span>
+            <span class="n">hf</span><span class="o">.</span><span class="n">reset_seed</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_threads</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpNetwork</span><span class="p">(</span><span class="n">conn_dict</span><span class="o">=</span><span class="n">conn_params</span><span class="p">,</span><span class="n">N1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N_s</span><span class="p">,</span><span class="n">N2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N_t</span><span class="p">)</span>
+            <span class="n">degrees</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_degrees</span><span class="p">(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop2</span><span class="p">)</span>
+            <span class="n">degrees</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">gather_data</span><span class="p">(</span><span class="n">degrees</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">degrees</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">chi</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">chi_squared_check</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+                <span class="n">pvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">hf</span><span class="o">.</span><span class="n">mpi_barrier</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">degrees</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">ks</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kstest</span><span class="p">(</span><span class="n">pvalues</span><span class="p">,</span> <span class="s1">&#39;uniform&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_dict</span><span class="p">[</span><span class="s1">&#39;alpha2&#39;</span><span class="p">]</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFixedInDegree.testAutapses"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree.testAutapses">[docs]</a>    <span class="k">def</span> <span class="nf">testAutapses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c1"># test that autapses exist</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;iaf_neuron&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">conn_params</span><span class="p">)</span>
+        <span class="c1"># make sure all connections do exist</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_connectivity_matrix</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">mpi_assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">ResetKernel</span><span class="p">()</span>
+
+        <span class="c1"># test that autapses were excluded</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>        
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;iaf_neuron&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">conn_params</span><span class="p">)</span>
+        <span class="c1"># make sure all connections do exist</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_connectivity_matrix</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">mpi_assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFixedInDegree.testMultapses"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.TestFixedInDegree.testMultapses">[docs]</a>    <span class="k">def</span> <span class="nf">testMultapses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;autapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1"># test that multapses were drawn</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;iaf_neuron&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">conn_params</span><span class="p">)</span>
+        <span class="n">nr_conns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">GetConnections</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="n">pop</span><span class="p">))</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">mpi_assert</span><span class="p">(</span><span class="n">nr_conns</span><span class="p">,</span> <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">ResetKernel</span><span class="p">()</span>
+
+        <span class="c1"># test that no multapses exist</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;indegree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span>
+        <span class="n">conn_params</span><span class="p">[</span><span class="s1">&#39;multapses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;iaf_neuron&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">hf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">conn_params</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">get_connectivity_matrix</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">pop</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">gather_data</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">M</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">flatten</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">))</span></div></div>
+
+<div class="viewcode-block" id="suite"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.suite">[docs]</a><span class="k">def</span> <span class="nf">suite</span><span class="p">():</span>
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestFixedInDegree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">suite</span></div>
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../modules/nest.tests.html#nest.tests.test_connect_fixed_indegree.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">runner</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">())</span></div>
+        
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.topology.tests package &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../index.html"/>
+        <link rel="up" title="nest.topology package" href="nest.topology.html"/>
+        <link rel="prev" title="nest.topology package" href="nest.topology.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nest.html">nest package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nest.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nest.lib.html">nest.lib package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nest.tests.html">nest.tests package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="nest.topology.html">nest.topology package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="nest.topology.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nest.topology.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nest.topology.html#module-nest.topology.hl_api">nest.topology.hl_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nest.topology.html#module-nest.topology">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.raster_plot">nest.raster_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.visualization">nest.visualization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.voltage_trace">nest.voltage_trace module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="nest.html">nest package</a> &raquo;</li>
+      
+          <li><a href="nest.topology.html">nest.topology package</a> &raquo;</li>
+      
+    <li>nest.topology.tests package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/modules/nest.topology.tests.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nest-topology-tests-package">
+<h1>nest.topology.tests package<a class="headerlink" href="#nest-topology-tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nest.topology.tests.test_all">
+<span id="nest-topology-tests-test-all-module"></span><h2>nest.topology.tests.test_all module<a class="headerlink" href="#module-nest.topology.tests.test_all" title="Permalink to this headline">¶</a></h2>
+<p>Testsuite for Topology PyNEST Interface.</p>
+<p>This testsuite mainly tests the PyNEST interface to the
+topology module, not the underlying topology module functions.</p>
+<p>It also tests the visualization functions that are available
+in PyNEST only.</p>
+<dl class="function">
+<dt id="nest.topology.tests.test_all.suite">
+<code class="descclassname">nest.topology.tests.test_all.</code><code class="descname">suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_all.html#suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_all.suite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology.tests.test_basics">
+<span id="nest-topology-tests-test-basics-module"></span><h2>nest.topology.tests.test_basics module<a class="headerlink" href="#module-nest.topology.tests.test_basics" title="Permalink to this headline">¶</a></h2>
+<p>Tests for basic topology hl_api functions.</p>
+<dl class="class">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase">
+<em class="property">class </em><code class="descclassname">nest.topology.tests.test_basics.</code><code class="descname">BasicsTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_CreateLayer">
+<code class="descname">test_CreateLayer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_CreateLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_CreateLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating a single layer from dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_CreateLayerN">
+<code class="descname">test_CreateLayerN</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_CreateLayerN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_CreateLayerN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating multiple layers from tuple of dicts.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_Displacement">
+<code class="descname">test_Displacement</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_Displacement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_Displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface check on displacement calculations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_Distance">
+<code class="descname">test_Distance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_Distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_Distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface check on distance calculations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_FindElements">
+<code class="descname">test_FindElements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_FindElements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_FindElements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface and result check for finding nearest element.
+This function is Py only, so we also need to check results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_GetCenterElement">
+<code class="descname">test_GetCenterElement</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_GetCenterElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_GetCenterElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface and result check for finding center element.
+This function is Py only, so we also need to check results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_GetElement">
+<code class="descname">test_GetElement</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_GetElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_GetElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if GetElement returns proper lists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_GetLayer">
+<code class="descname">test_GetLayer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_GetLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_GetLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if GetLayer returns correct information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_GetPosition">
+<code class="descname">test_GetPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_GetPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_GetPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if GetPosition returns proper positions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_GetTargetNodesPositions">
+<code class="descname">test_GetTargetNodesPositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_GetTargetNodesPositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_GetTargetNodesPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface check for finding targets.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_basics.BasicsTestCase.test_Parameter">
+<code class="descname">test_Parameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#BasicsTestCase.test_Parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.BasicsTestCase.test_Parameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.tests.test_basics.suite">
+<code class="descclassname">nest.topology.tests.test_basics.</code><code class="descname">suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_basics.html#suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_basics.suite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology.tests.test_dumping">
+<span id="nest-topology-tests-test-dumping-module"></span><h2>nest.topology.tests.test_dumping module<a class="headerlink" href="#module-nest.topology.tests.test_dumping" title="Permalink to this headline">¶</a></h2>
+<p>Tests for topology hl_api dumping functions.</p>
+<dl class="docutils">
+<dt>NOTE: These tests only test whether the code runs, it does not check</dt>
+<dd>whether the results produced are correct.</dd>
+</dl>
+<dl class="class">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase">
+<em class="property">class </em><code class="descclassname">nest.topology.tests.test_dumping.</code><code class="descname">PlottingTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase.nest_tmpdir">
+<code class="descname">nest_tmpdir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase.nest_tmpdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase.nest_tmpdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads temporary directory path from the environment variable, returns current directory otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase.test_DumpConns">
+<code class="descname">test_DumpConns</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase.test_DumpConns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase.test_DumpConns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dumping connections.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase.test_DumpConns2">
+<code class="descname">test_DumpConns2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase.test_DumpConns2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase.test_DumpConns2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dumping connections, 2 layers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase.test_DumpNodes">
+<code class="descname">test_DumpNodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase.test_DumpNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase.test_DumpNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dumping nodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_dumping.PlottingTestCase.test_DumpNodes2">
+<code class="descname">test_DumpNodes2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#PlottingTestCase.test_DumpNodes2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.PlottingTestCase.test_DumpNodes2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dumping nodes, two layers.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.tests.test_dumping.suite">
+<code class="descclassname">nest.topology.tests.test_dumping.</code><code class="descname">suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_dumping.html#suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_dumping.suite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology.tests.test_plotting">
+<span id="nest-topology-tests-test-plotting-module"></span><h2>nest.topology.tests.test_plotting module<a class="headerlink" href="#module-nest.topology.tests.test_plotting" title="Permalink to this headline">¶</a></h2>
+<p>Tests for basic topology hl_api functions.</p>
+<dl class="docutils">
+<dt>NOTE: These tests only test whether the code runs, it does not check</dt>
+<dd>whether the results produced are correct.</dd>
+</dl>
+<dl class="class">
+<dt id="nest.topology.tests.test_plotting.PlottingTestCase">
+<em class="property">class </em><code class="descclassname">nest.topology.tests.test_plotting.</code><code class="descname">PlottingTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_plotting.html#PlottingTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_plotting.PlottingTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="nest.topology.tests.test_plotting.PlottingTestCase.test_PlotKernel">
+<code class="descname">test_PlotKernel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_plotting.html#PlottingTestCase.test_PlotKernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_plotting.PlottingTestCase.test_PlotKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test plotting kernels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_plotting.PlottingTestCase.test_PlotLayer">
+<code class="descname">test_PlotLayer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_plotting.html#PlottingTestCase.test_PlotLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_plotting.PlottingTestCase.test_PlotLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test plotting layer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_plotting.PlottingTestCase.test_PlotTargets">
+<code class="descname">test_PlotTargets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_plotting.html#PlottingTestCase.test_PlotTargets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_plotting.PlottingTestCase.test_PlotTargets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test plotting targets.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.tests.test_plotting.suite">
+<code class="descclassname">nest.topology.tests.test_plotting.</code><code class="descname">suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_plotting.html#suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_plotting.suite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology.tests.test_random_parameter">
+<span id="nest-topology-tests-test-random-parameter-module"></span><h2>nest.topology.tests.test_random_parameter module<a class="headerlink" href="#module-nest.topology.tests.test_random_parameter" title="Permalink to this headline">¶</a></h2>
+<p>Tests for random topology parameter distributions. This is an implementation
+of the Kolmogorov-Smirnov test [1] to check that the distribution of weights
+fits the expected distribution to level alpha=0.05 when using random
+parameters. Also serves as a regression test for ticket #687.</p>
+<p>[1] <a class="reference external" href="http://www.itl.nist.gov/div898/handbook/eda/section3/eda35g.htm">http://www.itl.nist.gov/div898/handbook/eda/section3/eda35g.htm</a></p>
+<dl class="class">
+<dt id="nest.topology.tests.test_random_parameter.RandomParameterTestCase">
+<em class="property">class </em><code class="descclassname">nest.topology.tests.test_random_parameter.</code><code class="descname">RandomParameterTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#RandomParameterTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.RandomParameterTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="nest.topology.tests.test_random_parameter.RandomParameterTestCase.kolmogorov_smirnov">
+<code class="descname">kolmogorov_smirnov</code><span class="sig-paren">(</span><em>weight_dict</em>, <em>expected_cdf_func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#RandomParameterTestCase.kolmogorov_smirnov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.RandomParameterTestCase.kolmogorov_smirnov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create connections with given distribution of weights and test that it fits the given expected cumulative distribution using K-S.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_lognormal">
+<code class="descname">test_lognormal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#RandomParameterTestCase.test_lognormal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_lognormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test lognormal distribution of weights.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_normal">
+<code class="descname">test_normal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#RandomParameterTestCase.test_normal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_normal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test normal distribution of weights.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_uniform">
+<code class="descname">test_uniform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#RandomParameterTestCase.test_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.RandomParameterTestCase.test_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test uniform distribution of weights.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.tests.test_random_parameter.suite">
+<code class="descclassname">nest.topology.tests.test_random_parameter.</code><code class="descname">suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/tests/test_random_parameter.html#suite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.tests.test_random_parameter.suite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nest.topology.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="nest.topology.html" class="btn btn-neutral" title="nest.topology package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

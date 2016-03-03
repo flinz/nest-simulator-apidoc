@@ -1,0 +1,1656 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.topology package &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../index.html"/>
+        <link rel="up" title="nest package" href="nest.html"/>
+        <link rel="next" title="nest.topology.tests package" href="nest.topology.tests.html"/>
+        <link rel="prev" title="nest.tests.test_sp package" href="nest.tests.test_sp.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nest.html">nest package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nest.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nest.lib.html">nest.lib package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nest.tests.html">nest.tests package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">nest.topology package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nest.topology.hl_api">nest.topology.hl_api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nest.topology">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.raster_plot">nest.raster_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.visualization">nest.visualization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest.voltage_trace">nest.voltage_trace module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.html#module-nest">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="nest.html">nest package</a> &raquo;</li>
+      
+    <li>nest.topology package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/modules/nest.topology.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nest-topology-package">
+<h1>nest.topology package<a class="headerlink" href="#nest-topology-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nest.topology.tests.html">nest.topology.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests.test_all">nest.topology.tests.test_all module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests.test_basics">nest.topology.tests.test_basics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests.test_dumping">nest.topology.tests.test_dumping module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests.test_plotting">nest.topology.tests.test_plotting module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests.test_random_parameter">nest.topology.tests.test_random_parameter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nest.topology.tests.html#module-nest.topology.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nest.topology.hl_api">
+<span id="nest-topology-hl-api-module"></span><h2>nest.topology.hl_api module<a class="headerlink" href="#module-nest.topology.hl_api" title="Permalink to this headline">¶</a></h2>
+<p><strong>High-level API of PyNEST Topology Module</strong></p>
+<p>This file defines the user-level functions of NEST&#8217;s Python interface to the
+Topology module. The basic approach is the same as for the PyNEST interface to
+NEST:</p>
+<ol class="arabic">
+<li><p class="first">Function names are the same as in SLI.</p>
+</li>
+<li><p class="first">Nodes are identified by their GIDs.</p>
+</li>
+<li><p class="first">GIDs are always given as tuples or lists of integer(s).</p>
+</li>
+<li><p class="first">Commands returning GIDs return them as tuples.</p>
+</li>
+<li><p class="first">Other arguments can be</p>
+<ul class="simple">
+<li>single items that are applied to all entries in a GID list</li>
+<li>a list of the same length as the given list of GID(s) where each item is
+matched with the pertaining GID.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="n">layers</span> <span class="o">=</span> <span class="n">CreateLayer</span><span class="p">(({</span><span class="o">...</span><span class="p">},</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span> <span class="p">{</span><span class="o">...</span><span class="p">}))</span>
+</pre></div>
+</div>
+</dd>
+<dt>creates three layers and returns a tuple of three GIDs.</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">layers</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="p">{</span><span class="o">...</span><span class="p">})</span>
+</pre></div>
+</div>
+</dd>
+<dt>connects <cite>layers[0]</cite> to <cite>layers[1]</cite> and <cite>layers[1]</cite> to <cite>layers[2]</cite> using the same dictionary to specify both connections.</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">layers</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="p">({</span><span class="o">...</span><span class="p">},</span> <span class="p">{</span><span class="o">...</span><span class="p">}))</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>connects the same layers, but the <cite>layers[0]</cite> to <cite>layers[1]</cite> connection
+is specified by the first dictionary, the <cite>layers[1]</cite> to <cite>layers[2]</cite>
+connection by the second.</p>
+</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Kittel Austvoll,
+Hans Ekkehard Plesser,
+Hakon Enger</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="nest.topology.hl_api.ConnectLayers">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">ConnectLayers</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>projections</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#ConnectLayers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.ConnectLayers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pairwise connect of pre- and postsynaptic (lists of) layers.</p>
+<p><cite>pre</cite> and <cite>post</cite> must be a tuple/list of GIDs of equal length. The GIDs must
+refer to layers created with <code class="docutils literal"><span class="pre">CreateLayers</span></code>. Layers in the <cite>pre</cite> and
+<cite>post</cite> lists are connected pairwise.</p>
+<ul class="simple">
+<li>If <cite>projections</cite> is a single dictionary, it applies to all pre-post
+pairs.</li>
+<li>If <cite>projections</cite> is a tuple/list of dictionaries, it must have the same
+length as <cite>pre</cite> and <cite>post</cite> and each dictionary is matched with the proper
+pre-post pair.</li>
+</ul>
+<p>A minimal call of <code class="docutils literal"><span class="pre">ConnectLayers</span></code> expects a source layer <cite>pre</cite>, a
+target layer <cite>post</cite> and a connection dictionary <cite>projections</cite>
+containing at least the entry <cite>&#8216;connection_type&#8217;</cite> (either
+<cite>&#8216;convergent&#8217;</cite> or <cite>&#8216;divergent&#8217;</cite>).</p>
+<p>When connecting two layers, the driver layer is the one in which each node
+is considered in turn. The pool layer is the one from which nodes are
+chosen for each node in the driver layer.</p>
+<dl class="docutils">
+<dt>pre <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs of presynaptic layers (sources)</dd>
+<dt>post <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs of postsynaptic layers (targets)</dd>
+<dt>projections <span class="classifier-delimiter">:</span> <span class="classifier">(tuple/list of) dict(s)</span></dt>
+<dd>Dictionary or list of dictionaries specifying projection properties</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd>ConnectLayers returns <cite>None</cite></dd>
+</dl>
+<p>CreateLayer : Create one or more Topology layer(s).
+CreateMask : Create a <code class="docutils literal"><span class="pre">Mask</span></code> object. Documentation on available spatial</p>
+<blockquote>
+<div>masks. Masks can be used to specify the key <cite>&#8216;mask&#8217;</cite> of the
+connection dictionary.</div></blockquote>
+<dl class="docutils">
+<dt>CreateParameter <span class="classifier-delimiter">:</span> <span class="classifier">Create a <code class="docutils literal"><span class="pre">Parameter</span></code> object. Documentation on available</span></dt>
+<dd>parameters for distance dependency and randomization. Parameters can
+be used to specify the parameters <cite>&#8216;kernel&#8217;</cite>, <cite>&#8216;weights&#8217;</cite> and
+<cite>&#8216;delays&#8217;</cite> of the connection dictionary.</dd>
+</dl>
+<p>nest.GetConnections : Retrieve connections.</p>
+<p>Available keys for the layer-specifying dictionary <cite>projections</cite>
+allow_autapses : bool, optional, default: True</p>
+<blockquote>
+<div>An autapse is a synapse (connection) from a node onto itself.
+It is used together with the <cite>&#8216;number_of_connections&#8217;</cite> option.</div></blockquote>
+<dl class="docutils">
+<dt>allow_multapses <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default: True</span></dt>
+<dd>Node A is connected to node B by a multapse if there are synapses
+(connections) from A to B.
+It is used together with the <cite>&#8216;number_of_connections&#8217;</cite> option.</dd>
+<dt>connection_type <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>The type of connections can be either <cite>&#8216;convergent&#8217;</cite> or
+<cite>&#8216;divergent&#8217;</cite>. In case of convergent connections, the target
+layer is considered as driver layer and the source layer as pool
+layer - and vice versa for divergent connections.</dd>
+<dt>delays <span class="classifier-delimiter">:</span> <span class="classifier">[float | dict | Parameter object], optional, default: 1.0</span></dt>
+<dd>Delays can be constant, randomized or distance-dependent according
+to a provided function.
+Information on available functions can be found in the
+documentation on the function <code class="docutils literal"><span class="pre">CreateParameter</span></code>.</dd>
+<dt>kernel <span class="classifier-delimiter">:</span> <span class="classifier">[float | dict | Parameter object], optional, default: 1.0</span></dt>
+<dd>A kernel is a function mapping the distance (or displacement)
+between a driver and a pool node to a connection probability. The
+default kernel is 1.0, i.e., connections are created with
+certainty.
+Information on available functions can be found in the
+documentation on the function <code class="docutils literal"><span class="pre">CreateParameter</span></code>.</dd>
+<dt>mask <span class="classifier-delimiter">:</span> <span class="classifier">[dict | Mask object], optional</span></dt>
+<dd>The mask defines which pool nodes are considered as potential
+targets for each driver node. Parameters of the different
+available masks in 2 and 3 dimensions are also defined in
+dictionaries.
+If no mask is specified, all neurons from the pool layer are
+possible targets for each driver node.
+Information on available masks can be found in the documentation on
+the function <code class="docutils literal"><span class="pre">CreateMask</span></code>.</dd>
+<dt>number_of_connections <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd>Prescribed number of connections for each driver node. The actual
+connections being created are picked at random from all the
+candidate connections.</dd>
+<dt>synapse_model <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>The default synapse model in NEST is used if not specified
+otherwise.</dd>
+<dt>weights <span class="classifier-delimiter">:</span> <span class="classifier">[float | dict | Parameter object], optional, default: 1.0</span></dt>
+<dd>Weights can be constant, randomized or distance-dependent according
+to a provided function.
+Information on available functions can be found in the
+documentation on the function <code class="docutils literal"><span class="pre">CreateParameter</span></code>.</dd>
+</dl>
+<ul class="simple">
+<li>In the case of free probabilistic connections (in contrast to
+prescribing the number of connections), each possible driver-pool
+pair is inspected exactly once so that there will be at most one
+connection between each driver-pool pair.</li>
+<li>Periodic boundary conditions are always applied in the pool layer.
+It is irrelevant whether the driver layer has periodic boundary
+conditions or not.</li>
+<li>By default, Topology does not accept masks that are wider than the
+pool layer when using periodic boundary conditions.
+Kernel, weight and delay functions always consider the shortest
+distance (displacement) between driver and pool node.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications with a mask</span>
+<span class="n">conndict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;mask&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rectangular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lower_left&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+                                      <span class="s1">&#39;upper_right&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}}</span>
+
+<span class="c1"># connect layer l with itself according to the given</span>
+<span class="c1"># specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict1</span><span class="p">)</span>
+
+
+<span class="c1"># connection dictionary with distance-dependent kernel</span>
+<span class="c1"># (given as Parameter object) and randomized weights</span>
+<span class="c1"># (given as a dictionary)</span>
+<span class="n">gauss_kernel</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateParameter</span><span class="p">(</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;p_center&#39;</span> <span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                                               <span class="s1">&#39;sigma&#39;</span>    <span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
+<span class="n">conndict2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;mask&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;circular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">}},</span>
+             <span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="n">gauss_kernel</span><span class="p">,</span>
+             <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;uniform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.CreateLayer">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">CreateLayer</code><span class="sig-paren">(</span><em>specs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#CreateLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.CreateLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create one ore more Topology layer(s) according to given specifications.</p>
+<p>The Topology module organizes neuronal networks in layers. A layer is a
+special type of subnet which contains information about the spatial
+position of its nodes (simple or composite elements) in 2 or 3 dimensions.</p>
+<p>If <cite>specs</cite> is a dictionary, a single layer is created. If it is a list
+of dictionaries, one layer is created for each dictionary.</p>
+<p>Topology distinguishes between two classes of layers:</p>
+<blockquote>
+<div><ul class="simple">
+<li>grid-based layers in which each element is placed at a location in a
+regular grid</li>
+<li>free layers in which elements can be placed arbitrarily</li>
+</ul>
+</div></blockquote>
+<p>Obligatory dictionary entries define the class of layer
+(grid-based layers: &#8216;columns&#8217; and &#8216;rows&#8217;; free layers: &#8216;positions&#8217;)
+and the &#8216;elements&#8217;.</p>
+<dl class="docutils">
+<dt>specs <span class="classifier-delimiter">:</span> <span class="classifier">(tuple/list of) dict(s)</span></dt>
+<dd>Dictionary or list of dictionaries with layer specifications, see
+<strong>Notes</strong>.</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of int(s)</span></dt>
+<dd>GID(s) of created layer(s)</dd>
+</dl>
+<dl class="docutils">
+<dt>ConnectLayers: Connect two (lists of) layers which were created with</dt>
+<dd><code class="docutils literal"><span class="pre">CreateLayer</span></code> pairwise according to specified projections.</dd>
+</dl>
+<p>Available parameters for the layer-specifying dictionary <cite>specs</cite>
+center : tuple/list of floats, optional, default: (0.0, 0.0)</p>
+<blockquote>
+<div>Layers are centered about the origin by default, but the center
+coordinates can also be changed.
+&#8216;center&#8217; has length 2 or 3 dependent on the number of dimensions.</div></blockquote>
+<dl class="docutils">
+<dt>columns <span class="classifier-delimiter">:</span> <span class="classifier">int, obligatory for grid-based layers</span></dt>
+<dd>Number of columns.
+Needs <cite>&#8216;rows&#8217;</cite>; mutually exclusive with <cite>&#8216;positions&#8217;</cite>.</dd>
+<dt>edge_wrap <span class="classifier-delimiter">:</span> <span class="classifier">bool, default: False</span></dt>
+<dd>Periodic boundary conditions.</dd>
+<dt>elements <span class="classifier-delimiter">:</span> <span class="classifier">(tuple/list of) str or str followed by int</span></dt>
+<dd>Elements of layers are NEST network nodes such as neuron models or
+devices.
+For network elements with several nodes of the same type, the
+number of nodes to be created must follow the model name.
+For composite elements, a collection of nodes can be passed as
+list or tuple.</dd>
+<dt>extent <span class="classifier-delimiter">:</span> <span class="classifier">tuple of floats, optional, default in 2D: (1.0, 1.0)</span></dt>
+<dd>Size of the layer. It has length 2 or 3 dependent on the number of
+dimensions.</dd>
+<dt>positions <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of coordinates (lists/tuples of floats),</span></dt>
+<dd>obligatory for free layers
+Explicit specification of the positions of all elements.
+The coordinates have a length 2 or 3 dependent on the number of
+dimensions.
+All element positions must be within the layer’s extent.
+Mutually exclusive with &#8216;rows&#8217; and &#8216;columns&#8217;.</dd>
+<dt>rows <span class="classifier-delimiter">:</span> <span class="classifier">int, obligatory for grid-based layers</span></dt>
+<dd>Number of rows.
+Needs <cite>&#8216;columns&#8217;</cite>; mutually exclusive with <cite>&#8216;positions&#8217;</cite>.</dd>
+</dl>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest</span>
+<span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># grid-based layer</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># free layer</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)]</span>
+<span class="n">fl</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;positions&#39;</span> <span class="p">:</span> <span class="n">pos</span><span class="p">,</span>
+                     <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># extent, center and edge_wrap</span>
+<span class="n">el</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
+                     <span class="s1">&#39;center&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span>
+                     <span class="s1">&#39;edge_wrap&#39;</span> <span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                     <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># composite layer with several nodes of the same type</span>
+<span class="n">cl</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                     <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                     <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;iaf_cond_alpha&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+                                   <span class="s1">&#39;poisson_generator&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;noise_generator&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+
+<span class="c1"># investigate the status dictionary of a layer</span>
+<span class="n">nest</span><span class="o">.</span><span class="n">GetStatus</span><span class="p">(</span><span class="n">gl</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;topology&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.CreateMask">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">CreateMask</code><span class="sig-paren">(</span><em>masktype</em>, <em>specs</em>, <em>anchor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#CreateMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.CreateMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a spatial mask for connections.</p>
+<p>Masks are used when creating connections in the Topology module. A mask
+describes the area of the pool layer that is searched for nodes to
+connect for any given node in the driver layer. Several mask types
+are available. Examples are the grid region, the rectangular, circular or
+doughnut region.</p>
+<p>The command <code class="docutils literal"><span class="pre">CreateMask</span></code> creates a Mask object which may be combined
+with other <code class="docutils literal"><span class="pre">Mask</span></code> objects using Boolean operators. The mask is specified
+in a dictionary.</p>
+<p><code class="docutils literal"><span class="pre">Mask</span></code> objects can be passed to <code class="docutils literal"><span class="pre">ConnectLayers</span></code> in a
+connection dictionary with the key <cite>&#8216;mask&#8217;</cite>.</p>
+<dl class="docutils">
+<dt>masktype <span class="classifier-delimiter">:</span> <span class="classifier">str, [&#8216;rectangular&#8217; | &#8216;circular&#8217; | &#8216;doughnut&#8217;] for 2D masks, [&#8216;box&#8217; | &#8216;spherical&#8217;] for 3D masks, [&#8216;grid&#8217;] only for grid-based layers in 2D</span></dt>
+<dd>The mask name corresponds to the geometrical shape of the mask. There
+are different types for 2- and 3-dimensional layers.</dd>
+<dt>specs <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Dictionary specifying the parameters of the provided <cite>masktype</cite>,
+see <strong>Notes</strong>.</dd>
+<dt>anchor <span class="classifier-delimiter">:</span> <span class="classifier">[tuple/list of floats | dict with the keys <cite>&#8216;column&#8217;</cite> and <cite>&#8216;row&#8217;</cite> (for grid masks only)], optional, default: None</span></dt>
+<dd>By providing anchor coordinates, the location of the mask relative to
+the driver node can be changed. The list of coordinates has a length
+of 2 or 3 dependent on the number of dimensions.</dd>
+</dl>
+<p>out : <code class="docutils literal"><span class="pre">Mask</span></code> object</p>
+<dl class="docutils">
+<dt>ConnectLayers: Connect two (lists of) layers pairwise according to</dt>
+<dd>specified projections. <code class="docutils literal"><span class="pre">Mask</span></code> objects can be passed in a connection
+dictionary with the key <cite>&#8216;mask&#8217;</cite>.</dd>
+</dl>
+<ul class="simple">
+<li></li>
+</ul>
+<p><strong>Mask types</strong></p>
+<p>Available mask types (<cite>masktype</cite>) and their corresponding parameter
+dictionaries:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>2D free and grid-based layers</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span>&#39;rectangular&#39; :
+    {&#39;lower_left&#39; : [float, float],
+     &#39;upper_right&#39;: [float, float]}
+#or
+&#39;circular&#39; :
+    {&#39;radius&#39; : float}
+#or
+&#39;doughnut&#39; :
+    {&#39;inner_radius&#39; : float,
+     &#39;outer_radius&#39; : float}
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>3D free and grid-based layers</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span>&#39;box&#39; :
+    {&#39;lower_left&#39; : [float, float, float],
+     &#39;upper_right&#39; : [float, float, float]}
+#or
+&#39;spherical&#39; :
+    {&#39;radius&#39; : float}
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>2D grid-based layers only</dt>
+<dd><div class="first highlight-python"><div class="highlight"><pre><span></span>&#39;grid&#39; :
+    {&#39;rows&#39; : float,
+     &#39;columns&#39; : float}
+</pre></div>
+</div>
+<p>By default the top-left corner of a grid mask, i.e., the grid
+mask element with grid index [0, 0], is aligned with the driver
+node. It can be changed by means of the &#8216;anchor&#8217; parameter:</p>
+<blockquote class="last">
+<div><div class="highlight-python"><div class="highlight"><pre><span></span>&#39;anchor&#39; :
+    {&#39;row&#39; : float,
+     &#39;column&#39; : float}
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a grid-based layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># create a circular mask</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateMask</span><span class="p">(</span><span class="s1">&#39;circular&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications</span>
+<span class="n">conndict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mask&#39;</span>           <span class="p">:</span> <span class="n">m</span><span class="p">}</span>
+
+<span class="c1"># connect layer l with itself according to the specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.CreateParameter">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">CreateParameter</code><span class="sig-paren">(</span><em>parametertype</em>, <em>specs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#CreateParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.CreateParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a parameter for distance dependency or randomization.</p>
+<p>Parameters are (spatial) functions which are used when creating
+connections in the Topology module for distance dependency or
+randomization. This command creates a Parameter object which may be
+combined with other <code class="docutils literal"><span class="pre">Parameter</span></code> objects using arithmetic operators.
+The parameter is specified in a dictionary.</p>
+<p>A parameter may be used as a probability kernel when creating connections
+or as synaptic parameters (such as weight and delay), i.e., for specifying
+the parameters <cite>&#8216;kernel&#8217;</cite>, <cite>&#8216;weights&#8217;</cite> and <cite>&#8216;delays&#8217;</cite> in the
+connection dictionary passed to <code class="docutils literal"><span class="pre">ConnectLayers</span></code>.</p>
+<dl class="docutils">
+<dt>parametertype <span class="classifier-delimiter">:</span> <span class="classifier">{&#8216;constant&#8217;, &#8216;linear&#8217;, &#8216;exponential&#8217;, &#8216;gaussian&#8217;, &#8216;gaussian2D&#8217;, &#8216;uniform&#8217;, &#8216;normal&#8217;, &#8216;lognormal&#8217;}</span></dt>
+<dd>Function types with or without distance dependency</dd>
+<dt>specs <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Dictionary specifying the parameters of the provided
+<cite>&#8216;parametertype&#8217;</cite>, see <strong>Notes</strong>.</dd>
+</dl>
+<p>out : <code class="docutils literal"><span class="pre">Parameter</span></code> object</p>
+<dl class="docutils">
+<dt>ConnectLayers <span class="classifier-delimiter">:</span> <span class="classifier">Connect two (lists of) layers pairwise according to</span></dt>
+<dd>specified projections. Parameters can be used to specify the
+parameters <cite>&#8216;kernel&#8217;</cite>, <cite>&#8216;weights&#8217;</cite> and <cite>&#8216;delays&#8217;</cite> in the
+connection dictionary.</dd>
+</dl>
+<p>Parameters : Class for parameters for distance dependency or randomization.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<p><strong>Parameter types</strong></p>
+<p>Available parameter types (<cite>parametertype</cite> parameter), their function and
+acceptable keys for their corresponding specification dictionaries</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Constant</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span>&#39;constant&#39; :
+    {&#39;value&#39; : float} # constant value
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>With dependence on the distance <cite>d</cite></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span># p(d) = c + a * d
+&#39;linear&#39; :
+    {&#39;a&#39; : float, # slope, default: 1.0
+     &#39;c&#39; : float} # constant offset, default: 0.0
+# or
+# p(d) = c + a*exp(-d/tau)
+&#39;exponential&#39; :
+    {&#39;a&#39;   : float, # coefficient of exponential term, default: 1.0
+     &#39;c&#39;   : float, # constant offset, default: 0.0
+     &#39;tau&#39; : float} # length scale factor, default: 1.0
+# or
+# p(d) = c + p_center*exp(-(d-mean)^2/(2*sigma^2))
+&#39;gaussian&#39; :
+    {&#39;p_center&#39; : float, # value at center of Gaussian, default: 1.0
+     &#39;mean&#39;     : float, # distance to center, default: 0.0
+     &#39;sigma&#39;    : float, # width of Gaussian, default: 1.0
+     &#39;c&#39;        : float} # constant offset, default: 0.0
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Bivariate Gaussian parameter:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span># p(x,y) = c + p_center *
+#          exp( -( (x-mean_x)^2/sigma_x^2 + (y-mean_y)^2/sigma_y^2
+#          + 2*rho*(x-mean_x)*(y-mean_y)/(sigma_x*sigma_y) ) /
+#          (2*(1-rho^2)) )
+&#39;gaussian2D&#39; : 
+    {&#39;p_center&#39; : float, # value at center, default: 1.0
+     &#39;mean_x&#39;   : float, # x-coordinate of center, default: 0.0
+     &#39;mean_y&#39;   : float, # y-coordinate of center, default: 0.0
+     &#39;sigma_x&#39;  : float, # width in x-direction, default: 1.0
+     &#39;sigma_y&#39;  : float, # width in y-direction, default: 1.0
+     &#39;rho&#39;      : float, # correlation of x and y, default: 0.0
+     &#39;c&#39;        : float} # constant offset, default: 0.0
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Without distance dependency, for randomization</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span># random parameter with uniform distribution in [min,max)
+&#39;uniform&#39; : 
+    {&#39;min&#39; : float, # minimum value, default: 0.0
+     &#39;max&#39; : float} # maximum value, default: 1.0
+# or
+# random parameter with normal distribution, optionally truncated
+# to [min,max)
+&#39;normal&#39;: 
+    {&#39;mean&#39; : float, # mean value, default: 0.0
+     &#39;sigma&#39;: float, # standard deviation, default: 1.0
+     &#39;min&#39;  : float, # minimum value, default: -inf
+
+     &#39;max&#39;  : float} # maximum value, default: +inf
+# or
+# random parameter with lognormal distribution, optionally truncated
+# to [min,max)
+&#39;lognormal&#39; :
+    {&#39;mu&#39;   : float, # mean value of logarithm, default: 0.0
+     &#39;sigma&#39;: float, # standard deviation of logarithm, default: 1.0
+     &#39;min&#39;  : float, # minimum value, default: -inf
+     &#39;max&#39;  : float} # maximum value, default: +inf
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a grid-based layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># parameter for delay with linear distance dependency</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateParameter</span><span class="p">(</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+                                  <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications</span>
+<span class="n">conndict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;delays&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">}</span>
+
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.Displacement">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">Displacement</code><span class="sig-paren">(</span><em>from_arg</em>, <em>to_arg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Displacement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get vector of lateral displacement from node(s) <cite>from_arg</cite>
+to node(s) <cite>to_arg</cite>.</p>
+<p>Displacement is always measured in the layer to which the <cite>to_arg</cite> node
+belongs. If a node in the <cite>from_arg</cite> list belongs to a different layer,
+its location is projected into the <cite>to_arg</cite> layer. If explicit positions
+are given in the <cite>from_arg</cite> list, they are interpreted in the <cite>to_arg</cite>
+layer.
+Displacement is the shortest displacement, taking into account
+periodic boundary conditions where applicable.</p>
+<ul class="simple">
+<li>If one of <cite>from_arg</cite> or <cite>to_arg</cite> has length 1, and the other is longer,
+the displacement from/to the single item to all other items is given.</li>
+<li>If <cite>from_arg</cite> and <cite>to_arg</cite> both have more than two elements, they have
+to be lists of the same length and the displacement for each pair is
+returned.</li>
+</ul>
+<dl class="docutils">
+<dt>from_arg <span class="classifier-delimiter">:</span> <span class="classifier">[tuple/list of int(s) | tuple/list of tuples/lists of floats]</span></dt>
+<dd>List of GIDs or position(s)</dd>
+<dt>to_arg <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Displacement vectors between pairs of nodes in <cite>from_arg</cite> and <cite>to_arg</cite></dd>
+</dl>
+<p>Distance : Get lateral distances between nodes.
+DumpLayerConnections : Write connectivity information to file.
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li>The functions <code class="docutils literal"><span class="pre">GetPosition</span></code>, <code class="docutils literal"><span class="pre">Displacement</span></code> and <code class="docutils literal"><span class="pre">Distance</span></code> now
+only works for nodes local to the current MPI process, if used in a
+MPI-parallel simulation.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># displacement between node 2 and 3</span>
+<span class="k">print</span> <span class="n">tp</span><span class="o">.</span><span class="n">Displacement</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># displacment between the position (0.0., 0.0) and node 2</span>
+<span class="k">print</span> <span class="n">tp</span><span class="o">.</span><span class="n">Displacement</span><span class="p">([(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)],</span> <span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.Distance">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">Distance</code><span class="sig-paren">(</span><em>from_arg</em>, <em>to_arg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get lateral distances from node(s) from_arg to node(s) to_arg.</p>
+<p>The distance between two nodes is the length of its displacement.</p>
+<p>Distance is always measured in the layer to which the <cite>to_arg</cite> node
+belongs. If a node in the <cite>from_arg</cite> list belongs to a different layer,
+its location is projected into the <cite>to_arg</cite> layer. If explicit positions
+are given in the <cite>from_arg</cite> list, they are interpreted in the <cite>to_arg</cite>
+layer.
+Distance is the shortest distance, taking into account periodic boundary
+conditions where applicable.</p>
+<ul class="simple">
+<li>If one of <cite>from_arg</cite> or <cite>to_arg</cite> has length 1, and the other is longer,
+the displacement from/to the single item to all other items is given.</li>
+<li>If <cite>from_arg</cite> and <cite>to_arg</cite> both have more than two elements, they have
+to be lists of the same length and the distance for each pair is returned.</li>
+</ul>
+<dl class="docutils">
+<dt>from_arg <span class="classifier-delimiter">:</span> <span class="classifier">[tuple/list of ints | tuple/list with tuples/lists of floats]</span></dt>
+<dd>List of GIDs or position(s)</dd>
+<dt>to_arg <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of ints</span></dt>
+<dd>List of GIDs</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Distances between from and to</dd>
+</dl>
+<p>Displacement : Get vector of lateral displacements between nodes.
+DumpLayerConnections : Write connectivity information to file.
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li>The functions <code class="docutils literal"><span class="pre">GetPosition</span></code>, <code class="docutils literal"><span class="pre">Displacement</span></code> and <code class="docutils literal"><span class="pre">Distance</span></code> now
+only works for nodes local to the current MPI process, if used in a
+MPI-parallel simulation.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># distance between node 2 and 3</span>
+<span class="k">print</span> <span class="n">tp</span><span class="o">.</span><span class="n">Distance</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># distance between the position (0.0., 0.0) and node 2</span>
+<span class="k">print</span> <span class="n">tp</span><span class="o">.</span><span class="n">Distance</span><span class="p">([(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)],</span> <span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.DumpLayerConnections">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">DumpLayerConnections</code><span class="sig-paren">(</span><em>layers</em>, <em>synapse_model</em>, <em>outname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#DumpLayerConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.DumpLayerConnections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write connectivity information to file.</p>
+<p>This function writes connection information to file for all outgoing
+connections from the given layers with the given synapse model.
+Data for all layers in the list is combined.</p>
+<dl class="docutils">
+<dt>For each connection, one line is stored, in the following format:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span>source_gid target_gid weight delay dx dy [dz]
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>where (dx, dy [, dz]) is the displacement from source to target node.
+If targets do not have positions (eg spike detectors outside any layer),
+NaN is written for each displacement coordinate.</p>
+<dl class="docutils">
+<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs of a Topology layer</dd>
+<dt>synapse_model <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>NEST synapse model</dd>
+<dt>outname <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Name of file to write to (will be overwritten if it exists)</dd>
+</dl>
+<p>out : None</p>
+<p>DumpLayerNodes : Write layer node positions to file.
+GetPosition : Return the spatial locations of nodes.
+nest.GetConnections : Return connection identifiers between</p>
+<blockquote>
+<div>sources and targets</div></blockquote>
+<ul class="simple">
+<li>If calling this function from a distributed simulation, this function
+will write to one file per MPI rank.</li>
+<li>File names are formed by inserting
+the MPI Rank into the file name before the file name suffix.</li>
+<li>Each file stores data for local nodes.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">l</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;synapse_model&#39;</span><span class="p">:</span> <span class="s1">&#39;static_synapse&#39;</span><span class="p">})</span>
+
+<span class="c1"># write connectivity information to file</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">DumpLayerConnections</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s1">&#39;static_synapse&#39;</span><span class="p">,</span> <span class="s1">&#39;connections.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.DumpLayerNodes">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">DumpLayerNodes</code><span class="sig-paren">(</span><em>layers</em>, <em>outname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#DumpLayerNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.DumpLayerNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write GID and position data of layer(s) to file.</p>
+<p>Write GID and position data to layer(s) file. For each node in a layer,
+a line with the following information is written:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span>GID x-position y-position [z-position]
+</pre></div>
+</div>
+</div></blockquote>
+<p>If <cite>layers</cite> contains several GIDs, data for all layers will be written to a
+single file.</p>
+<dl class="docutils">
+<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs of a Topology layer</dd>
+<dt>outname <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Name of file to write to (existing files are overwritten)</dd>
+</dl>
+<p>out : None</p>
+<p>DumpLayerConnections : Write connectivity information to file.
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li>If calling this function from a distributed simulation, this function
+will write to one file per MPI rank.</li>
+<li>File names are formed by adding the MPI Rank into the file name before
+the file name suffix.</li>
+<li>Each file stores data for nodes local to that file.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>     <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>  <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span> <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># write layer node positions to file</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">DumpLayerNodes</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s1">&#39;positions.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.FindCenterElement">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">FindCenterElement</code><span class="sig-paren">(</span><em>layers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#FindCenterElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.FindCenterElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return GID(s) of node closest to center of layers.</p>
+<dl class="docutils">
+<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of layer GIDs</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of int(s)</span></dt>
+<dd>A list containing for each layer the GID of the node closest to the
+center of the layer, as specified in the layer parameters. If several
+nodes are equally close to the center, an arbitrary one of them is
+returned.</dd>
+</dl>
+<dl class="docutils">
+<dt>FindNearestElement <span class="classifier-delimiter">:</span> <span class="classifier">Return the node(s) closest to the location(s) in the</span></dt>
+<dd>given layer(s).</dd>
+</dl>
+<p>GetElement : Return the node(s) at the location(s) in the given layer(s).
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># get GID of the element closest to the center of the layer</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">FindCenterElement</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.FindNearestElement">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">FindNearestElement</code><span class="sig-paren">(</span><em>layers</em>, <em>locations</em>, <em>find_all=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#FindNearestElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.FindNearestElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the node(s) closest to the location(s) in the given layer(s).</p>
+<p>This function works for fixed grid layers only.</p>
+<ul class="simple">
+<li>If layers contains a single GID and locations is a single 2-element
+array giving a grid location, return a list of GIDs of layer elements
+at the given location.</li>
+<li>If layers is a list with a single GID and locations is a list of
+coordinates, the function returns a list of lists with GIDs of the nodes
+at all locations.</li>
+<li>If layers is a list of GIDs and locations single 2-element array giving
+a grid location, the function returns a list of lists with the GIDs of
+the nodes in all layers at the given location.</li>
+<li>If layers and locations are lists, it returns a nested list of GIDs, one
+list for each layer and each location.</li>
+</ul>
+<dl class="docutils">
+<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of layer GIDs</dd>
+<dt>locations <span class="classifier-delimiter">:</span> <span class="classifier">tuple(s)/list(s) of tuple(s)/list(s)</span></dt>
+<dd>2-element list with coordinates of a single position, or list of
+2-element list of positions</dd>
+<dt>find_all <span class="classifier-delimiter">:</span> <span class="classifier">bool, default: False</span></dt>
+<dd>If there are several nodes with same minimal distance, return only the
+first found, if <cite>False</cite>.
+If <cite>True</cite>, instead of returning a single GID, return a list of GIDs
+containing all nodes with minimal distance.</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of int(s)</span></dt>
+<dd>List of node GIDs</dd>
+</dl>
+<p>FindCenterElement : Return GID(s) of node closest to center of layers.
+GetElement : Return the node(s) at the location(s) in the given layer(s).
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># get GID of element closest to some location</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">FindNearestElement</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.GetElement">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">GetElement</code><span class="sig-paren">(</span><em>layers</em>, <em>locations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#GetElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.GetElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the node(s) at the location(s) in the given layer(s).</p>
+<p>This function works for fixed grid layers only.</p>
+<ul class="simple">
+<li>If layers contains a single GID and locations is a single 2-element
+array giving a grid location, return a list of GIDs of layer elements
+at the given location.</li>
+<li>If layers is a list with a single GID and locations is a list of
+coordinates, the function returns a list of lists with GIDs of the nodes
+at all locations.</li>
+<li>If layers is a list of GIDs and locations single 2-element array giving
+a grid location, the function returns a list of lists with the GIDs of
+the nodes in all layers at the given location.</li>
+<li>If layers and locations are lists, it returns a nested list of GIDs, one
+list for each layer and each location.</li>
+</ul>
+<dl class="docutils">
+<dt>layers <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of layer GIDs</dd>
+<dt>locations <span class="classifier-delimiter">:</span> <span class="classifier">[tuple/list of floats | tuple/list of tuples/lists of floats]</span></dt>
+<dd>2-element list with coordinates of a single grid location,
+or list of 2-element lists of coordinates for 2-dimensional layers,
+i.e., on the format [column, row]</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of int(s)</span></dt>
+<dd>List of GIDs</dd>
+</dl>
+<p>GetLayer : Return the layer to which nodes belong.
+FindNearestElement: Return the node(s) closest to the location(s) in the</p>
+<blockquote>
+<div>given layer(s).</div></blockquote>
+<p>GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># get GID of element in last row and column</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">GetElement</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.GetLayer">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">GetLayer</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#GetLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.GetLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the layer to which nodes belong.</p>
+<dl class="docutils">
+<dt>nodes <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of neuron GIDs</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of int(s)</span></dt>
+<dd>List of layer GIDs</dd>
+</dl>
+<p>GetElement : Return the node(s) at the location(s) in the given layer(s).
+GetPosition : Return the spatial locations of nodes.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># get layer GID of nodes in layer</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span><span class="n">nest</span><span class="o">.</span><span class="n">GetNodes</span><span class="p">(</span><span class="n">l</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.GetPosition">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">GetPosition</code><span class="sig-paren">(</span><em>nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#GetPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.GetPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the spatial locations of nodes.</p>
+<dl class="docutils">
+<dt>nodes <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GIDs</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of tuple(s)</span></dt>
+<dd>List of positions as 2- or 3-element lists</dd>
+</dl>
+<p>Displacement : Get vector of lateral displacement between nodes.
+Distance : Get lateral distance between nodes.
+DumpLayerConnections : Write connectivity information to file.
+DumpLayerNodes : Write layer node positions to file.</p>
+<ul class="simple">
+<li>The functions <code class="docutils literal"><span class="pre">GetPosition</span></code>, <code class="docutils literal"><span class="pre">Displacement</span></code> and <code class="docutils literal"><span class="pre">Distance</span></code> now
+only works for nodes local to the current MPI process, if used in a
+MPI-parallel simulation.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest</span>
+<span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># retrieve positions of all (local) nodes belonging to the layer</span>
+<span class="n">gids</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">GetNodes</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;local_only&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">GetPosition</span><span class="p">(</span><span class="n">gids</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.GetTargetNodes">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">GetTargetNodes</code><span class="sig-paren">(</span><em>sources</em>, <em>tgt_layer</em>, <em>tgt_model=None</em>, <em>syn_model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#GetTargetNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.GetTargetNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain targets of a list of sources in given target layer.</p>
+<dl class="docutils">
+<dt>sources <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GID(s) of source neurons</dd>
+<dt>tgt_layer <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>Single-element list with GID of tgt_layer</dd>
+<dt>tgt_model <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Return only target positions for a given neuron model.</dd>
+<dt>syn_model <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Return only target positions for a given synapse model.</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of list(s) of int(s)</span></dt>
+<dd><p class="first">List of GIDs of target neurons fulfilling the given criteria.
+It is a list of lists, one list per source.</p>
+<p class="last">For each neuron in <cite>sources</cite>, this function finds all target elements in
+<cite>tgt_layer</cite>. If <cite>tgt_model</cite> is not given (default), all targets are
+returned, otherwise only targets of specific type, and similarly for
+syn_model.</p>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>GetTargetPositions <span class="classifier-delimiter">:</span> <span class="classifier">Obtain positions of targets of a list of sources in a</span></dt>
+<dd>given target layer.</dd>
+<dt>nest.GetConnections <span class="classifier-delimiter">:</span> <span class="classifier">Return connection identifiers between</span></dt>
+<dd>sources and targets</dd>
+</dl>
+<ul class="simple">
+<li>For distributed simulations, this function only returns targets on the
+local MPI process.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications with a mask</span>
+<span class="n">conndict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mask&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rectangular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lower_left&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+                                     <span class="s1">&#39;upper_right&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}}</span>
+
+<span class="c1"># connect layer l with itself according to the given</span>
+<span class="c1"># specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict</span><span class="p">)</span>
+
+<span class="c1"># get the GIDs of the targets of the source neuron with GID 5</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">GetTargetNodes</span><span class="p">([</span><span class="mi">5</span><span class="p">],</span> <span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.GetTargetPositions">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">GetTargetPositions</code><span class="sig-paren">(</span><em>sources</em>, <em>tgt_layer</em>, <em>tgt_model=None</em>, <em>syn_model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#GetTargetPositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.GetTargetPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain positions of targets of a list of sources in a given target layer.</p>
+<dl class="docutils">
+<dt>sources <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>List of GID(s) of source neurons</dd>
+<dt>tgt_layer <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>Single-element list with GID of tgt_layer</dd>
+<dt>tgt_model <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Return only target positions for a given neuron model.</dd>
+<dt>syn_type <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Return only target positions for a given synapse model.</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">tuple of tuple(s) of tuple(s) of floats</span></dt>
+<dd><p class="first">Positions of target neurons fulfilling the given criteria as a nested
+list, containing one list of positions per node in sources.</p>
+<p class="last">For each neuron in <cite>sources</cite>, this function finds all target elements in
+<cite>tgt_layer</cite>. If <cite>tgt_model</cite> is not given (default), all targets are
+returned, otherwise only targets of specific type, and similarly for
+syn_model.</p>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>GetTargetNodes <span class="classifier-delimiter">:</span> <span class="classifier">Obtain targets of a list of sources in a given target</span></dt>
+<dd>layer.</dd>
+</dl>
+<ul class="simple">
+<li>For distributed simulations, this function only returns targets on the
+local MPI process.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications with a mask</span>
+<span class="n">conndict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;mask&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rectangular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lower_left&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+                                      <span class="s1">&#39;upper_right&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}}</span>
+
+<span class="c1"># connect layer l with itself according to the given</span>
+<span class="c1"># specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict1</span><span class="p">)</span>
+
+<span class="c1"># get the positions of the targets of the source neuron with GID 5</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">GetTargetPositions</span><span class="p">([</span><span class="mi">5</span><span class="p">],</span> <span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="nest.topology.hl_api.Mask">
+<em class="property">class </em><code class="descclassname">nest.topology.hl_api.</code><code class="descname">Mask</code><span class="sig-paren">(</span><em>datum</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for spatial masks.</p>
+<p>Masks are used when creating connections in the Topology module. A mask
+describes which area of the pool layer shall be searched for nodes to
+connect for any given node in the driver layer. Masks are created using
+the <code class="docutils literal"><span class="pre">CreateMask</span></code> command.</p>
+<dl class="method">
+<dt id="nest.topology.hl_api.Mask.Inside">
+<code class="descname">Inside</code><span class="sig-paren">(</span><em>point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Mask.Inside"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Mask.Inside" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if a point is inside a mask.</p>
+<dl class="docutils">
+<dt>point <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of float values</span></dt>
+<dd>Coordinate of point</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>True if the point is inside the mask, False otherwise</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nest.topology.hl_api.Parameter">
+<em class="property">class </em><code class="descclassname">nest.topology.hl_api.</code><code class="descname">Parameter</code><span class="sig-paren">(</span><em>datum</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for parameters for distance dependency or randomization.</p>
+<p>Parameters are spatial functions which are used when creating
+connections in the Topology module. A parameter may be used as a
+probability kernel when creating connections or as synaptic parameters
+(such as weight and delay). Parameters are created using the
+<code class="docutils literal"><span class="pre">CreateParameter</span></code> command.</p>
+<dl class="method">
+<dt id="nest.topology.hl_api.Parameter.GetValue">
+<code class="descname">GetValue</code><span class="sig-paren">(</span><em>point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#Parameter.GetValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.Parameter.GetValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute value of parameter at a point.</p>
+<dl class="docutils">
+<dt>point <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of float values</span></dt>
+<dd>coordinate of point</dd>
+</dl>
+<dl class="docutils">
+<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">value</span></dt>
+<dd>The value of the parameter at the point</dd>
+</dl>
+<p>CreateParameter : create parameter for e.g., distance dependency</p>
+<ul class="simple">
+<li></li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+
+<span class="c1">#linear dependent parameter</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateParameter</span><span class="p">(</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span> <span class="p">:</span> <span class="mf">2.</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span> <span class="p">:</span> <span class="mf">0.</span><span class="p">})</span>
+
+<span class="c1">#get out value</span>
+<span class="n">P</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.PlotKernel">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">PlotKernel</code><span class="sig-paren">(</span><em>ax</em>, <em>src_nrn</em>, <em>mask</em>, <em>kern=None</em>, <em>mask_color='red'</em>, <em>kernel_color='red'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#PlotKernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.PlotKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add indication of mask and kernel to axes.</p>
+<p>Adds solid red line for mask. For doughnut mask show inner and outer line.
+If kern is Gaussian, add blue dashed lines marking 1, 2, 3 sigma.
+This function ignores periodic boundary conditions.
+Usually, this function is invoked by <code class="docutils literal"><span class="pre">PlotTargets</span></code>.</p>
+<dl class="docutils">
+<dt>ax <span class="classifier-delimiter">:</span> <span class="classifier">matplotlib.axes.AxesSubplot,</span></dt>
+<dd>subplot reference returned by PlotTargets</dd>
+<dt>src_nrn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GID of source neuron  (as single element list), mask and kernel
+plotted relative to it</dd>
+<dt>mask <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Mask used in creating connections.</dd>
+<dt>kern <span class="classifier-delimiter">:</span> <span class="classifier">[None | dict], optional, default: None</span></dt>
+<dd>Kernel used in creating connections</dd>
+<dt>mask_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;red&#8217;</span></dt>
+<dd>Color used for line marking mask</dd>
+<dt>kernel_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;red&#8217;</span></dt>
+<dd>Color used for lines marking kernel</dd>
+</dl>
+<p>out : None</p>
+<dl class="docutils">
+<dt>CreateMask <span class="classifier-delimiter">:</span> <span class="classifier">Create a <code class="docutils literal"><span class="pre">Mask</span></code> object. Documentation on available spatial</span></dt>
+<dd>masks.</dd>
+<dt>CreateParameter <span class="classifier-delimiter">:</span> <span class="classifier">Create a <code class="docutils literal"><span class="pre">Parameter</span></code> object. Documentation on available</span></dt>
+<dd>parameters for distance dependency and randomization.</dd>
+</dl>
+<p>PlotLayer : Plot all nodes in a layer.</p>
+<ul class="simple">
+<li>Do not use this function in distributed simulations.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications</span>
+<span class="n">mask_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rectangular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lower_left&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+                             <span class="s1">&#39;upper_right&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}</span>
+<span class="n">kernel_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gaussian&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;p_center&#39;</span> <span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                            <span class="s1">&#39;sigma&#39;</span>    <span class="p">:</span> <span class="mf">1.0</span><span class="p">}}</span>
+<span class="n">conndict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mask&#39;</span>   <span class="p">:</span> <span class="n">mask_dict</span><span class="p">,</span>
+            <span class="s1">&#39;kernel&#39;</span> <span class="p">:</span> <span class="n">kernel_dict</span><span class="p">}</span>
+
+<span class="c1"># connect layer l with itself according to the given</span>
+<span class="c1"># specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict</span><span class="p">)</span>
+
+<span class="c1"># set up figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># plot layer nodes</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">PlotLayer</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+
+<span class="c1"># choose center element of the layer as source node</span>
+<span class="n">ctr_elem</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">FindCenterElement</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="c1"># plot mask and kernel of the center element</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">PlotKernel</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ctr_elem</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask_dict</span><span class="p">,</span> <span class="n">kern</span><span class="o">=</span><span class="n">kernel_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.PlotLayer">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">PlotLayer</code><span class="sig-paren">(</span><em>layer</em>, <em>fig=None</em>, <em>nodecolor='b'</em>, <em>nodesize=20</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#PlotLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.PlotLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all nodes in a layer.</p>
+<p>This function plots only top-level nodes, not the content of composite
+nodes.</p>
+<dl class="docutils">
+<dt>layer <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>GID of layer to plot, must be tuple/list of length 1</dd>
+<dt>fig <span class="classifier-delimiter">:</span> <span class="classifier">[None | matplotlib.figure.Figure object], optional, default: None</span></dt>
+<dd>Matplotlib figure to plot to. If not given, a new figure is
+created.</dd>
+<dt>nodecolor <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;b&#8217;</span></dt>
+<dd>Color for nodes</dd>
+<dt>nodesize <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default: 20</span></dt>
+<dd>Marker size for nodes</dd>
+</dl>
+<p>out : <cite>matplotlib.figure.Figure</cite> object</p>
+<p>PlotKernel : Add indication of mask and kernel to axes.
+PlotTargets : Plot all targets of a given source.
+matplotlib.figure.Figure : matplotlib Figure class</p>
+<ul class="simple">
+<li>Do not use this function in distributed simulations.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># plot layer with all its nodes</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">PlotLayer</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.PlotTargets">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">PlotTargets</code><span class="sig-paren">(</span><em>src_nrn</em>, <em>tgt_layer</em>, <em>tgt_model=None</em>, <em>syn_type=None</em>, <em>fig=None</em>, <em>mask=None</em>, <em>kernel=None</em>, <em>src_color='red'</em>, <em>src_size=50</em>, <em>tgt_color='blue'</em>, <em>tgt_size=20</em>, <em>mask_color='red'</em>, <em>kernel_color='red'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#PlotTargets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.PlotTargets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all targets of source neuron <cite>src_nrn</cite> in a target layer <cite>tgt_layer</cite>.</p>
+<dl class="docutils">
+<dt>src_nrn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GID of source neuron (as single-element list)</dd>
+<dt>tgt_layer <span class="classifier-delimiter">:</span> <span class="classifier">tuple/list of int(s)</span></dt>
+<dd>GID of tgt_layer (as single-element list)</dd>
+<dt>tgt_model <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Show only targets of a given model.</dd>
+<dt>syn_type <span class="classifier-delimiter">:</span> <span class="classifier">[None | str], optional, default: None</span></dt>
+<dd>Show only targets connected to with a given synapse type</dd>
+<dt>fig <span class="classifier-delimiter">:</span> <span class="classifier">[None | matplotlib.figure.Figure object], optional, default: None</span></dt>
+<dd>Matplotlib figure to plot to. If not given, a new figure is created.</dd>
+<dt>mask <span class="classifier-delimiter">:</span> <span class="classifier">[None | dict], optional, default: None</span></dt>
+<dd>Draw topology mask with targets; see <code class="docutils literal"><span class="pre">PlotKernel</span></code> for details.</dd>
+<dt>kernel <span class="classifier-delimiter">:</span> <span class="classifier">[None | dict], optional, default: None</span></dt>
+<dd>Draw topology kernel with targets; see <code class="docutils literal"><span class="pre">PlotKernel</span></code> for details.</dd>
+<dt>src_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;red&#8217;</span></dt>
+<dd>Color used to mark source node position</dd>
+<dt>src_size <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default: 50</span></dt>
+<dd>Size of source marker (see scatter for details)</dd>
+<dt>tgt_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;blue&#8217;</span></dt>
+<dd>Color used to mark target node positions</dd>
+<dt>tgt_size <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default: 20</span></dt>
+<dd>Size of target markers (see scatter for details)</dd>
+<dt>mask_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;red&#8217;</span></dt>
+<dd>Color used for line marking mask</dd>
+<dt>kernel_color <span class="classifier-delimiter">:</span> <span class="classifier">[None | any matplotlib color], optional, default: &#8216;red&#8217;</span></dt>
+<dd>Color used for lines marking kernel</dd>
+</dl>
+<p>out : matplotlib.figure.Figure object</p>
+<dl class="docutils">
+<dt>GetTargetNodes <span class="classifier-delimiter">:</span> <span class="classifier">Obtain targets of a list of sources in a given target</span></dt>
+<dd>layer.</dd>
+<dt>GetTargetPositions <span class="classifier-delimiter">:</span> <span class="classifier">Obtain positions of targets of a list of sources in a</span></dt>
+<dd>given target layer.</dd>
+</dl>
+<p>PlotKernel : Add indication of mask and kernel to axes.
+PlotLayer : Plot all nodes in a layer.
+matplotlib.pyplot.scatter : matplotlib scatter plot.</p>
+<ul class="simple">
+<li>Do not use this function in distributed simulations.</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Example</strong></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest.topology</span> <span class="kn">as</span> <span class="nn">tp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># create a layer</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">({</span><span class="s1">&#39;rows&#39;</span>      <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;columns&#39;</span>   <span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+                    <span class="s1">&#39;extent&#39;</span>    <span class="p">:</span> <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">],</span>
+                    <span class="s1">&#39;elements&#39;</span>  <span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">})</span>
+
+<span class="c1"># connectivity specifications with a mask</span>
+<span class="n">conndict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;connection_type&#39;</span><span class="p">:</span> <span class="s1">&#39;divergent&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;mask&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rectangular&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lower_left&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>
+                                      <span class="s1">&#39;upper_right&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}}</span>
+
+<span class="c1"># connect layer l with itself according to the given</span>
+<span class="c1"># specifications</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">ConnectLayers</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">conndict</span><span class="p">)</span>
+
+<span class="c1"># plot the targets of the source neuron with GID 5</span>
+<span class="n">tp</span><span class="o">.</span><span class="n">PlotTargets</span><span class="p">([</span><span class="mi">5</span><span class="p">],</span> <span class="n">l</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="nest.topology.hl_api.topology_func">
+<code class="descclassname">nest.topology.hl_api.</code><code class="descname">topology_func</code><span class="sig-paren">(</span><em>slifunc</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology/hl_api.html#topology_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.hl_api.topology_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute SLI function <cite>slifunc</cite> with arguments <cite>args</cite> in Topology namespace.</p>
+<dl class="docutils">
+<dt>slifunc <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>SLI namespace expression</dd>
+</dl>
+<dl class="docutils">
+<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>An arbitrary number of arguments</dd>
+</dl>
+<dl class="docutils">
+<dt>out :</dt>
+<dd>Values from SLI function <cite>slifunc</cite></dd>
+</dl>
+<p>nest.sli_func</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nest.topology">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nest.topology" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nest.topology.test">
+<code class="descclassname">nest.topology.</code><code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/topology.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.topology.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a battery of unit tests on Topology PyNEST</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nest.topology.tests.html" class="btn btn-neutral float-right" title="nest.topology.tests package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nest.tests.test_sp.html" class="btn btn-neutral" title="nest.tests.test_sp package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

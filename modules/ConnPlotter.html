@@ -1,0 +1,557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ConnPlotter package &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../index.html" />
+    <link rel="up" title="site-packages" href="modules.html" />
+    <link rel="prev" title="site-packages" href="modules.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="connplotter-package">
+<h1>ConnPlotter package<a class="headerlink" href="#connplotter-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ConnPlotter.ConnPlotter">
+<span id="connplotter-connplotter-module"></span><h2>ConnPlotter.ConnPlotter module<a class="headerlink" href="#module-ConnPlotter.ConnPlotter" title="Permalink to this headline">¶</a></h2>
+<p>ConnPlotter is a tool to create connectivity pattern tables.</p>
+<p>For background on ConnPlotter, please see</p>
+<blockquote>
+<div>Eilen Nordlie and Hans Ekkehard Plesser.
+Connection Pattern Tables: A new way to visualize connectivity
+in neuronal network models.
+Frontiers in Neuroinformatics 3:39 (2010)
+doi: 10.3389/neuro.11.039.2009</div></blockquote>
+<p>Example:
+# code creating population and connection lists</p>
+<p>from ConnPlotter import ConnectionPattern, SynType</p>
+<p># Case A: All connections have the same &#8220;synapse_model&#8221;.
+#
+# Connections with weight &lt; 0 are classified as excitatory,
+#                  weight &gt; 0 are classified as inhibitory.
+# Each sender must make either excitatory or inhibitory connection,
+# not both. When computing totals, excit/inhib connections are
+# weighted with +-1.
+pattern = ConnectionPattern(layerList, connList)</p>
+<p># Case B: All connections have the same &#8220;synapse_model&#8221;, but violate Dale&#8217;s law
+#
+# Connections with weight &lt; 0 are classified as excitatory,
+#                  weight &gt; 0 are classified as inhibitory.
+# A single sender may have excitatory and inhibitory connections.
+# When computing totals, excit/inhib connections are
+# weighted with +-1.
+pattern = ConnectionPattern(layerList, connList,</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>synTypes=(((SynType(&#8216;exc&#8217;,  1.0, &#8216;b&#8217;),</dt>
+<dd>SynType(&#8216;inh&#8217;, -1.0, &#8216;r&#8217;)),)))</dd>
+</dl>
+</div></blockquote>
+<p># Case C: Synapse models are &#8220;AMPA&#8221;, &#8220;NMDA&#8221;, &#8220;GABA_A&#8221;, &#8220;GABA_B&#8221;.
+# 
+# Connections are plotted by synapse model, with AMPA and NMDA
+# on the top row, GABA_A and GABA_B in the bottom row when
+# combining by layer. Senders must either have AMPA and NMDA or 
+# GABA_A and GABA_B synapses, but not both. When computing totals, 
+# AMPA and NMDA connections are weighted with +1, GABA_A and GABA_B
+# with -1.
+pattern = ConnectionPattern(layerList, connList)</p>
+<p># Case D: Explicit synapse types.
+#
+# If your network model uses other synapse types, or you want to use
+# other weighting factors when computing totals, or you want different
+# colormaps, you must specify synapse type information explicitly for
+# ALL synase models in your network. For each synapse model, you create
+# a 
+#
+#        SynType(name, tweight, cmap)
+#
+# object, where &#8220;name&#8221; is the synapse model name, &#8220;tweight&#8221; the weight
+# to be given to the type when computing totals (usually &gt;0 for excit, 
+# &lt;0 for inhib synapses), and &#8220;cmap&#8221; the &#8220;colormap&#8221;: if may be a
+# matplotlib.colors.Colormap instance or any valid matplotlib color
+# specification; in the latter case, as colormap will be generated 
+# ranging from white to the given color. 
+# Synapse types are passed as a tuple of tuples. Synapses in a tuple form
+# a group. ConnPlotter assumes that a sender may make synapses with all
+# types in a single group, but never synapses with types from different
+# groups (If you group by transmitter, this simply reflects Dale&#8217;s law).
+# When connections are aggregated by layer, each group is printed on one 
+# row.
+pattern = ConnectionPattern(layerList, connList, synTypes =     ((SynType(&#8216;Asyn&#8217;,  1.0, &#8216;orange&#8217;),</p>
+<blockquote>
+<div><blockquote>
+<div>SynType(&#8216;Bsyn&#8217;,  2.5, &#8216;r&#8217;),
+SynType(&#8216;Csyn&#8217;,  0.5, (1.0, 0.5, 0.0))),  # end first group</div></blockquote>
+<dl class="docutils">
+<dt>(SynType(&#8216;Dsyn&#8217;, -1.5, matplotlib.pylab.cm.jet),</dt>
+<dd>SynType(&#8216;Esyn&#8217;, -3.2, &#8216;0.95&#8217;))))</dd>
+</dl>
+</div></blockquote>
+<p># See documentation of class ConnectionPattern for more options.</p>
+<p># plotting the pattern</p>
+<p># show connection kernels for all sender-target pairs and all synapse models
+pattern.plot()</p>
+<p># combine synapses of all types for each sender-target pair
+# always used red-blue (inhib-excit) color scale
+pattern.plot(aggrSyns=True)</p>
+<p># for each pair of sender-target layer pair, show sums for each synapse type
+pattern.plot(aggrGroups=True)</p>
+<p># As mode layer, but combine synapse types.
+# always used red-blue (inhib-excit) color scale
+pattern.plot(aggrSyns=True, aggrGroups=True)</p>
+<p># Show only synases of the selected type(s)
+pattern.plot(mode=(&#8216;AMPA&#8217;,))
+pattern.plot(mode=(&#8216;AMPA&#8217;, &#8216;GABA_A&#8217;))</p>
+<p># use same color scales for all patches
+pattern.plot(globalColors=True)</p>
+<p># manually specify limits for global color scale
+pattern.plot(globalColors=True, colorLimits=[0, 2.5])</p>
+<p># save to file(s)
+# NB: do not write to PDF directly, this seems to cause artifacts
+pattern.plot(file=&#8217;net.png&#8217;)  
+pattern.plot(file=(&#8216;net.eps&#8217;,&#8217;net.png&#8217;))</p>
+<p># You can adjust some properties of the figure by changing the
+# default values in plotParams.</p>
+<p># Experimentally, you can dump the connection pattern into a LaTeX table
+pattern.toLaTeX(&#8216;pattern.tex&#8217;, standalone=True)</p>
+<p># Figure layout can be modified by changing the global variable plotParams.
+# Please see the documentation for class PlotParams for details.</p>
+<p># Changes 30 June 2010:
+# - Singular layers (extent 0x0) are ignored as target layers.
+#   The reason for this is so that single-generator &#8220;layers&#8221; can be
+#   displayed as input.
+#   Problems:
+#   - singularity is not made clear visually
+#   - This messes up the diagonal shading
+#   - makes no sense to aggregate any longer</p>
+<dl class="class">
+<dt id="ConnPlotter.ConnPlotter.ConnectionPattern">
+<em class="property">class </em><code class="descclassname">ConnPlotter.ConnPlotter.</code><code class="descname">ConnectionPattern</code><span class="sig-paren">(</span><em>lList</em>, <em>cList</em>, <em>synTypes=None</em>, <em>intensity='wp'</em>, <em>mList=None</em>, <em>Vmem=None</em>, <em>poporder=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#ConnectionPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.ConnectionPattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Connection pattern representation for plotting.</p>
+<p>When a ConnectionPattern is instantiated, all connection kernels
+are pre-computed. They can later be plotted in various forms by
+calling the plot() method.</p>
+<p>The constructor requires layer and connection lists:</p>
+<blockquote>
+<div>ConnectionPattern(layerList, connList, synTypes, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</div></blockquote>
+<dl class="docutils">
+<dt>The layerList is used to:</dt>
+<dd><ul class="first last simple">
+<li>determine the size of patches</li>
+<li>determine the block structure</li>
+</ul>
+</dd>
+</dl>
+<p>All other information is taken from the connList. Information
+about synapses is inferred from the connList.</p>
+<p>The following keyword arguments can also be given:</p>
+<dl class="docutils">
+<dt>poporder <span class="classifier-delimiter">:</span> <span class="classifier">Population order. A dictionary mapping population names </span></dt>
+<dd>to numbers; populations will be sorted in diagram in order 
+of increasing numbers. Otherwise, they are sorted 
+alphabetically.</dd>
+<dt>intensity:  &#8216;wp&#8217;  -  use weight * probability (default)</dt>
+<dd><p class="first">&#8216;p&#8217;   -  use probability alone 
+&#8216;tcd&#8217; -  use total charge deposited * probability</p>
+<blockquote class="last">
+<div>requires mList and Vmem; per v 0.7 only supported
+for ht_neuron.</div></blockquote>
+</dd>
+</dl>
+<p>mList    :  model list; required for &#8216;tcd&#8217;
+Vmem     :  membrane potential; required for &#8216;tcd&#8217;</p>
+<dl class="method">
+<dt id="ConnPlotter.ConnPlotter.ConnectionPattern.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>aggrGroups=False</em>, <em>aggrSyns=False</em>, <em>globalColors=False</em>, <em>colorLimits=None</em>, <em>showLegend=True</em>, <em>selectSyns=None</em>, <em>file=None</em>, <em>fixedWidth=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#ConnectionPattern.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.ConnectionPattern.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot connection pattern.
+By default, connections between any pair of populations
+are plotted on the screen, with separate color scales for
+all patches.</p>
+<p>Arguments:
+aggrGroups  If True, aggregate projections with the same synapse type</p>
+<blockquote>
+<div>and the same source and target groups (default: False)</div></blockquote>
+<p>aggrSyns    If True, aggregate projections with the same synapse model (default: False)</p>
+<p>globalColors  If True, use global color scale, otherwise local (default: False)</p>
+<dl class="docutils">
+<dt>colorLimits   If given, must be two element vector for lower and upper limits of</dt>
+<dd>color scale. Implies globalColors (default: None)</dd>
+</dl>
+<p>showLegend   If True, show legend below CPT (default: True).</p>
+<dl class="docutils">
+<dt>selectSyns    If tuple of synapse models, show only connections of the </dt>
+<dd>give types. Cannot be combined with aggregation.</dd>
+<dt>file     If given, save plot to given file name; file may also be a tuple of </dt>
+<dd>file names, the figure will then be saved to all files. This may be 
+useful if you want to save the same figure in several formats.
+You should not save to PDF directly, this may lead to artefacts; 
+rather save to PS or EPS, then convert.</dd>
+</dl>
+<p>fixedWidth Figure will be scaled to this width in mm by changing patch size.</p>
+<p>Returns:
+kern_min, kern_max   Minimal and maximal values of kernels, with kern_min &lt;=0, kern_max&gt;=0.</p>
+<p>Output:
+figure created</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ConnPlotter.ConnPlotter.ConnectionPattern.toLaTeX">
+<code class="descname">toLaTeX</code><span class="sig-paren">(</span><em>file</em>, <em>standalone=False</em>, <em>enumerate=False</em>, <em>legend=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#ConnectionPattern.toLaTeX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.ConnectionPattern.toLaTeX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write connection table to file.</p>
+<p>Arguments:
+file        output file name
+standalone  create complete LaTeX file (default: False)
+enumerate   enumerate connections (default: False)
+legend      add explanation of functions used (default: True)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ConnPlotter.ConnPlotter.SynType">
+<em class="property">class </em><code class="descclassname">ConnPlotter.ConnPlotter.</code><code class="descname">SynType</code><span class="sig-paren">(</span><em>name</em>, <em>relweight</em>, <em>cmap</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#SynType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.SynType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Provide information about how synapse types should be rendered.</p>
+<p>A singly nested list of SynType objects can be passed to the
+ConnectionPattern constructor to specify layout and rendering info.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ConnPlotter.ConnPlotter.PlotParams">
+<em class="property">class </em><code class="descclassname">ConnPlotter.ConnPlotter.</code><code class="descname">PlotParams</code><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#PlotParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collects parameters governing plotting.
+Implemented using properties to ensure they are read-only.</p>
+<dl class="class">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins">
+<em class="property">class </em><code class="descname">Margins</code><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#PlotParams.Margins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Width of outer margins, in mm.</p>
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins.bottom">
+<code class="descname">bottom</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins.bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins.colbar">
+<code class="descname">colbar</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins.colbar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins.left">
+<code class="descname">left</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins.left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins.right">
+<code class="descname">right</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins.right" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.Margins.top">
+<code class="descname">top</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.Margins.top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.cbheight">
+<code class="descclassname">PlotParams.</code><code class="descname">cbheight</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.cbheight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of colorbar, relative to margins.colbar</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.cboffset">
+<code class="descclassname">PlotParams.</code><code class="descname">cboffset</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.cboffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Left offset of colorbar, relative to figure width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.cbspace">
+<code class="descclassname">PlotParams.</code><code class="descname">cbspace</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.cbspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spacing between colorbars, relative to figure width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.cbwidth">
+<code class="descclassname">PlotParams.</code><code class="descname">cbwidth</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.cbwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of single colorbar, relative to figure width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.layer_bg">
+<code class="descclassname">PlotParams.</code><code class="descname">layer_bg</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.layer_bg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of colors for layer background. 
+Entries &#8220;super&#8221;, &#8220;diag&#8221;, &#8220;sub&#8221;. Each entry
+can be set to any valid color specification.
+If just a color is given, create dict by
+brightening/dimming.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.layer_font">
+<code class="descclassname">PlotParams.</code><code class="descname">layer_font</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.layer_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font to use for layer labels.
+Can be set to a matplotlib.font_manager.FontProperties instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.layer_orientation">
+<code class="descclassname">PlotParams.</code><code class="descname">layer_orientation</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.layer_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orientation of layer labels.
+Dictionary with orientation of sender and target labels. Orientation
+is either &#8216;horizontal&#8217;, &#8216;vertial&#8217;, or a value in degrees.  When set 
+to a single string or number, this value is used for both sender and
+target labels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.legend_location">
+<code class="descclassname">PlotParams.</code><code class="descname">legend_location</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.legend_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to &#8216;top&#8217;, place legend label above colorbar,
+if None, to the left.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.legend_tick_font">
+<code class="descclassname">PlotParams.</code><code class="descname">legend_tick_font</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.legend_tick_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>FontProperties for legend (colorbar) ticks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.legend_tick_format">
+<code class="descclassname">PlotParams.</code><code class="descname">legend_tick_format</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.legend_tick_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>C-style format string for legend (colorbar) tick marks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.legend_ticks">
+<code class="descclassname">PlotParams.</code><code class="descname">legend_ticks</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.legend_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ordered list of values at which legend (colorbar) ticks shall be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.legend_title_font">
+<code class="descclassname">PlotParams.</code><code class="descname">legend_title_font</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.legend_title_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>FontProperties for legend (colorbar) titles.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.n_kern">
+<code class="descclassname">PlotParams.</code><code class="descname">n_kern</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.n_kern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample long kernel dimension at N_kernel points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.patch_size">
+<code class="descclassname">PlotParams.</code><code class="descname">patch_size</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.patch_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length of the longest edge of the largest patch, in mm.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.pop_font">
+<code class="descclassname">PlotParams.</code><code class="descname">pop_font</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.pop_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font to use for population labels.
+Can be set to a matplotlib.font_manager.FontProperties instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.pop_orientation">
+<code class="descclassname">PlotParams.</code><code class="descname">pop_orientation</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.pop_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orientation of population labels.
+Dictionary with orientation of sender and target labels. Orientation
+is either &#8216;horizontal&#8217;, &#8216;vertial&#8217;, or a value in degrees.  When set 
+to a single string or number, this value is used for both sender and
+target labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.reset">
+<code class="descclassname">PlotParams.</code><code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/ConnPlotter.html#PlotParams.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset to default values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.z_conn">
+<code class="descclassname">PlotParams.</code><code class="descname">z_conn</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.z_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Z-value for connection kernel axes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.z_layer">
+<code class="descclassname">PlotParams.</code><code class="descname">z_layer</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.z_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Z-value for layer label axes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ConnPlotter.ConnPlotter.PlotParams.z_pop">
+<code class="descclassname">PlotParams.</code><code class="descname">z_pop</code><a class="headerlink" href="#ConnPlotter.ConnPlotter.PlotParams.z_pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Z-value for population label axes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ConnPlotter.colormaps">
+<span id="connplotter-colormaps-module"></span><h2>ConnPlotter.colormaps module<a class="headerlink" href="#module-ConnPlotter.colormaps" title="Permalink to this headline">¶</a></h2>
+<p>Colormaps for ConnPlotter.</p>
+<p>Provides the following functions and colormaps:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>make_colormap: based on color specification, create colormap </dt>
+<dd><p class="first last">running from from white to fully saturated color</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">redblue: from fully saturated red to white to fully saturated blue</p>
+</li>
+<li><p class="first">bluered: from fully saturated blue to white to fully saturated red</p>
+</li>
+</ul>
+</div></blockquote>
+<p>For all colormaps, &#8220;bad&#8221; values (NaN) are mapped to white.</p>
+<p>Provides also ZeroCenterNorm, mapping negative values to 0..0.5, 
+positive to 0.5..1.</p>
+<dl class="class">
+<dt id="ConnPlotter.colormaps.ZeroCenterNorm">
+<em class="property">class </em><code class="descclassname">ConnPlotter.colormaps.</code><code class="descname">ZeroCenterNorm</code><span class="sig-paren">(</span><em>vmin=None</em>, <em>vmax=None</em>, <em>clip=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/colormaps.html#ZeroCenterNorm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.colormaps.ZeroCenterNorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">matplotlib.colors.Normalize</span></code></p>
+<p>Normalize so that value 0 is always at 0.5.</p>
+<p>Code from matplotlib.colors.Normalize.
+Copyright (c) 2002-2009 John D. Hunter; All Rights Reserved
+<a class="reference external" href="http://matplotlib.sourceforge.net/users/license.html">http://matplotlib.sourceforge.net/users/license.html</a></p>
+<dl class="method">
+<dt id="ConnPlotter.colormaps.ZeroCenterNorm.inverse">
+<code class="descname">inverse</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/colormaps.html#ZeroCenterNorm.inverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.colormaps.ZeroCenterNorm.inverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert color map. Required by colorbar().</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ConnPlotter.colormaps.make_colormap">
+<code class="descclassname">ConnPlotter.colormaps.</code><code class="descname">make_colormap</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ConnPlotter/colormaps.html#make_colormap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ConnPlotter.colormaps.make_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create LinearSegmentedColormap ranging from white to the given color.
+Color can be given in any legal color format. Bad color is set to white.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="connplotter-tcd-nest-module">
+<h2>ConnPlotter.tcd_nest module<a class="headerlink" href="#connplotter-tcd-nest-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-ConnPlotter.tcd_nest"></span><p>Interface routines to extract synapse information from NEST.</p>
+<p>This file provides the interface to NEST required to plot effective
+kernel connectivity as total charge deposited (TCD) as a function of 
+mean membrane potential.</p>
+<p>In order to use TCD plots, you need to create an instance of class
+SynapsesNEST. The constructor will import NEST to obtain all necessary
+information. TCD can then be obtained by calling the generated object.</p>
+<p>NB: At present, TCD is supported only for the ht_model.</p>
+</div>
+<div class="section" id="module-ConnPlotter">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ConnPlotter" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ConnPlotter package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ConnPlotter.ConnPlotter">ConnPlotter.ConnPlotter module</a></li>
+<li><a class="reference internal" href="#module-ConnPlotter.colormaps">ConnPlotter.colormaps module</a></li>
+<li><a class="reference internal" href="#connplotter-tcd-nest-module">ConnPlotter.tcd_nest module</a></li>
+<li><a class="reference internal" href="#module-ConnPlotter">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">site-packages</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">site-packages</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/ConnPlotter.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Nest Initiative.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="../_sources/modules/ConnPlotter.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

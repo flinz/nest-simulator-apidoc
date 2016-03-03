@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.lib.hl_api_connections &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="nest" href="../../nest.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/nest.html">nest package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../nest.html">nest</a> &raquo;</li>
+      
+    <li>nest.lib.hl_api_connections</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nest.lib.hl_api_connections</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># hl_api_connections.py</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of NEST.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2004 The NEST Initiative</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with NEST.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions for connection handling</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.hl_api_helper</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.hl_api_nodes</span> <span class="kn">import</span> <span class="n">Create</span>
+<span class="kn">from</span> <span class="nn">.hl_api_info</span> <span class="kn">import</span> <span class="n">GetStatus</span>
+<span class="kn">from</span> <span class="nn">.hl_api_simulation</span> <span class="kn">import</span> <span class="n">GetKernelStatus</span><span class="p">,</span> <span class="n">SetKernelStatus</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;GetConnections&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="FindConnections"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.FindConnections">[docs]</a><span class="k">def</span> <span class="nf">FindConnections</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">synapse_model</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">synapse_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an array of identifiers for connections that match the</span>
+<span class="sd">    given parameters. Only source is mandatory and must be a list of</span>
+<span class="sd">    one or more nodes. If target and/or synapse_model is/are given,</span>
+<span class="sd">    they must be single values, lists of length one or the same length</span>
+<span class="sd">    as source. Use GetStatus()/SetStatus() to inspect/modify the found</span>
+<span class="sd">    connections.</span>
+
+<span class="sd">    Note: FindConnections() is deprecated and will be removed in the future.</span>
+<span class="sd">          Use GetConnections() instead.</span>
+
+<span class="sd">    Note: synapse_type is alias for synapse_model for backward compatibility</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">synapse_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">synapse_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;synapse_type&#39; is alias for &#39;synapse_model&#39; and cannot be used together with &#39;synapse_model&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">synapse_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">synapse_model</span> <span class="o">=</span> <span class="n">synapse_type</span>
+
+    <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">synapse_model</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">}</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">source</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">synapse_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">synapse_model</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">synapse_model</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="p">(</span><span class="n">uni_str</span><span class="p">,),</span> <span class="s2">&quot;synapse_model&quot;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s2">&quot;synapse_model&quot;</span><span class="p">:</span> <span class="n">syn</span><span class="p">}</span>
+                  <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">syn</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">synapse_model</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">synapse_model</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="p">(</span><span class="nb">int</span><span class="p">,),</span> <span class="s2">&quot;target&quot;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">}</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># target is not None and synapse_model is not None</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="p">(</span><span class="nb">int</span><span class="p">,),</span> <span class="s2">&quot;target&quot;</span><span class="p">)</span>
+        <span class="n">synapse_model</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">synapse_model</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="p">(</span><span class="n">uni_str</span><span class="p">,),</span> <span class="s2">&quot;synapse_model&quot;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s2">&quot;synapse_model&quot;</span><span class="p">:</span> <span class="n">syn</span><span class="p">}</span>
+                  <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">syn</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">synapse_model</span><span class="p">)]</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;{FindConnections} Map Flatten&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">({</span>
+        <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">src</span><span class="p">),</span>
+        <span class="s1">&#39;target_thread&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span>
+        <span class="s1">&#39;synapse_modelid&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">sm</span><span class="p">),</span>
+        <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">prt</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">tt</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">prt</span> <span class="ow">in</span> <span class="n">spp</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="GetConnections"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.GetConnections">[docs]</a><span class="k">def</span> <span class="nf">GetConnections</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">synapse_model</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">synapse_label</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an array of connection identifiers.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    source - list of source GIDs</span>
+<span class="sd">    target - list of target GIDs</span>
+<span class="sd">    synapse_model - string with the synapse model</span>
+<span class="sd">    synapse_label - non negative integer with synapse label</span>
+
+<span class="sd">    If GetConnections is called without parameters, all connections</span>
+<span class="sd">    in the network are returned.</span>
+
+<span class="sd">    If a list of source neurons is given, only connections from these</span>
+<span class="sd">    pre-synaptic neurons are returned.</span>
+
+<span class="sd">    If a list of target neurons is given, only connections to these</span>
+<span class="sd">    post-synaptic neurons are returned.</span>
+
+<span class="sd">    If a synapse model is given, only connections with this synapse</span>
+<span class="sd">    type are returned.</span>
+
+<span class="sd">    If a synapse label is given, only connections with this synapse</span>
+<span class="sd">    label are returned.</span>
+
+<span class="sd">    Any combination of source, target, synapse_model and synapse_label</span>
+<span class="sd">    parameters is permitted.</span>
+
+<span class="sd">    Each connection id is a 5-tuple or, if available, a NumPy</span>
+<span class="sd">    array with the following five entries:</span>
+<span class="sd">    source-gid, target-gid, target-thread, synapse-id, port</span>
+
+<span class="sd">    Note: Only connections with targets on the MPI process executing</span>
+<span class="sd">          the command are returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_coercible_to_sli_array</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;source must be a list of GIDs&quot;</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_coercible_to_sli_array</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;target must be a list of GIDs&quot;</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span>
+
+    <span class="k">if</span> <span class="n">synapse_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;synapse_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">SLILiteral</span><span class="p">(</span><span class="n">synapse_model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">synapse_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;synapse_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">synapse_label</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;GetConnections&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">spp</span><span class="p">()</span></div>
+
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="OneToOneConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.OneToOneConnect">[docs]</a><span class="k">def</span> <span class="nf">OneToOneConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make one-to-one connections of type model between the nodes in</span>
+<span class="sd">    pre and the nodes in post. pre and post have to be lists of the</span>
+<span class="sd">    same length. If params is given (as dictionary or list of</span>
+<span class="sd">    dictionaries), they are used as parameters for the connections. If</span>
+<span class="sd">    params is given as a single float or as list of floats, it is used</span>
+<span class="sd">    as weight(s), in which case delay also has to be given as float or</span>
+<span class="sd">    as list of floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;pre and post have to be the same length&quot;</span><span class="p">)</span>
+
+    <span class="c1"># pre post Connect</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">):</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> Connect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="c1"># pre post params Connect</span>
+    <span class="k">elif</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">),</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,),</span> <span class="s2">&quot;params&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;params must be a dict, or list of dicts of length 1 or len(pre).&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> Connect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="c1"># pre post w d Connect</span>
+    <span class="k">elif</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;params&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;params must be a float, or list of floats of length 1 or len(pre) and will be used as weight(s).&quot;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;delay&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;delay must be a float, or list of floats of length 1 or len(pre).&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">dl</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> Connect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;Both &#39;params&#39; and &#39;delay&#39; have to be given.&quot;</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ConvergentConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.ConvergentConnect">[docs]</a><span class="k">def</span> <span class="nf">ConvergentConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect all neurons in pre to each neuron in post. pre and post</span>
+<span class="sd">    have to be lists. If weight is given (as a single float or as list</span>
+<span class="sd">    of floats), delay also has to be given as float or as list of</span>
+<span class="sd">    floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">post</span> <span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> ConvergentConnect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;weight must be a float, or sequence of floats of length 1 or len(pre)&quot;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;delay&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;delay must be a float, or sequence of floats of length 1 or len(pre)&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">post</span><span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> ConvergentConnect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;Both &#39;weight&#39; and &#39;delay&#39; have to be given.&quot;</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="RandomConvergentConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.RandomConvergentConnect">[docs]</a><span class="k">def</span> <span class="nf">RandomConvergentConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect n randomly selected neurons from pre to each neuron in</span>
+<span class="sd">    post. pre and post have to be lists. If weight is given (as a</span>
+<span class="sd">    single float or as list of floats), delay also has to be given as</span>
+<span class="sd">    float or as list of floats. options is a dictionary specifying</span>
+<span class="sd">    options to the RandomConvergentConnect function: allow_autapses,</span>
+<span class="sd">    allow_multapses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;number of neurons n should be an integer&quot;</span><span class="p">)</span>
+
+    <span class="c1"># store current options, set desired options</span>
+    <span class="n">old_options</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">old_options</span> <span class="o">=</span> <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;GetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomConvergentConnect&#39;</span><span class="p">,</span>
+                               <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">old_options</span><span class="p">[</span><span class="s1">&#39;DefaultOptions&#39;</span><span class="p">]</span> <span class="c1"># in the way when restoring</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;SetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomConvergentConnect&#39;</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                 <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sli_func</span><span class="p">(</span>
+            <span class="s1">&#39;/m Set /n Set /pre Set { pre exch n m RandomConvergentConnect } forall&#39;</span><span class="p">,</span>
+            <span class="n">post</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;weight must be a float, or sequence of floats of length 1 or n&quot;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;delay&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;delay must be a float, or sequence of floats of length 1 or n&quot;</span><span class="p">)</span>
+
+        <span class="n">sli_func</span><span class="p">(</span>
+            <span class="s1">&#39;/m Set /d Set /w Set /n Set /pre Set { pre exch n w d m RandomConvergentConnect } forall&#39;</span><span class="p">,</span>
+            <span class="n">post</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="c1"># restore old options</span>
+    <span class="k">if</span> <span class="n">old_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;SetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomConvergentConnect&#39;</span><span class="p">,</span> <span class="n">old_options</span><span class="p">,</span>
+                 <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;Both &#39;weight&#39; and &#39;delay&#39; have to be given.&quot;</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="DivergentConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.DivergentConnect">[docs]</a><span class="k">def</span> <span class="nf">DivergentConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect each neuron in pre to all neurons in post. pre and post</span>
+<span class="sd">    have to be lists. If weight is given (as a single float or as list</span>
+<span class="sd">    of floats), delay also has to be given as float or as list of</span>
+<span class="sd">    floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">pre</span> <span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> DivergentConnect&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;weight must be a float, or sequence of floats of length 1 or len(post)&quot;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">),</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;delay&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;delay must be a float, or sequence of floats of length 1 or len(post)&quot;</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">%s</span><span class="s1"> DivergentConnect&#39;</span> <span class="o">%</span> <span class="n">model</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">pre</span> <span class="p">:</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;Both &#39;weight&#39; and &#39;delay&#39; have to be given.&quot;</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="Connect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.Connect">[docs]</a><span class="k">def</span> <span class="nf">Connect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">conn_spec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">syn_spec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect pre nodes to post nodes.</span>
+
+<span class="sd">    Nodes in pre and post are connected using the specified connectivity</span>
+<span class="sd">    (all-to-all by default) and synapse type (static_synapse by default).</span>
+<span class="sd">    Details depend on the connectivity rule.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">    Connect does not iterate over subnets, it only connects explicitly</span>
+<span class="sd">    specified nodes.</span>
+
+<span class="sd">    pre - presynaptic nodes, given as list of GIDs</span>
+<span class="sd">    post - postsynaptic nodes, given as list of GIDs</span>
+<span class="sd">    conn_spec - string, or dictionary specifying connectivity rule, see below</span>
+<span class="sd">    syn_spec - string, or dictionary specifying synapse model, see below</span>
+
+<span class="sd">    Connectivity specification (conn_spec):</span>
+
+<span class="sd">    Connectivity is specified either as a string containing the name of a</span>
+<span class="sd">    connectivity rule (default: &#39;all_to_all&#39;) or as a dictionary specifying</span>
+<span class="sd">    the rule and any mandatory rule-specific parameters (e.g. &#39;indegree&#39;).</span>
+<span class="sd">    In addition, switches setting permission for establishing self-connections</span>
+<span class="sd">    (&#39;autapses&#39;, default: True) and multiple connections between a pair of nodes</span>
+<span class="sd">    (&#39;multapses&#39;, default: True) can be contained in the dictionary.</span>
+
+<span class="sd">    Available rules and their associated parameters are:</span>
+<span class="sd">     - &#39;all_to_all&#39; (default)</span>
+<span class="sd">     - &#39;one_to_one&#39;</span>
+<span class="sd">     - &#39;fixed_indegree&#39;, &#39;indegree&#39;</span>
+<span class="sd">     - &#39;fixed_outdegree&#39;, &#39;outdegree&#39;</span>
+<span class="sd">     - &#39;fixed_total_number&#39;, &#39;N&#39;</span>
+<span class="sd">     - &#39;pairwise_bernoulli&#39;, &#39;p&#39;</span>
+
+<span class="sd">    Example choices for the conn_spec are:</span>
+<span class="sd">    - &#39;one_to_one&#39;</span>
+<span class="sd">    - {&#39;rule&#39;: &#39;fixed_indegree&#39;, &#39;indegree&#39;: 2500, &#39;autapses&#39;: False}</span>
+<span class="sd">    - {&#39;rule&#39;: &#39;pairwise_bernoulli&#39;, &#39;p&#39;: 0.1}</span>
+
+<span class="sd">    Synapse specification (syn_spec):</span>
+
+<span class="sd">    The synapse model and its properties can be given either as a string identifying</span>
+<span class="sd">    a specific synapse model (default: &#39;static_synapse&#39;) or as a dictionary</span>
+<span class="sd">    specifying the synapse model and its parameters.</span>
+
+<span class="sd">    Available keys in the synapse specification dictionary are &#39;model&#39;, &#39;weight&#39;,</span>
+<span class="sd">    &#39;delay&#39;, &#39;receptor_type&#39; and any parameters specific to the selected synapse model.</span>
+<span class="sd">    All parameters are optional and if not specified, the default values of the synapse</span>
+<span class="sd">    model will be used. The key &#39;model&#39; identifies the synapse model, this can be one</span>
+<span class="sd">    of NEST&#39;s built-in synapse models or a user-defined model created via CopyModel().</span>
+<span class="sd">    If &#39;model&#39; is not specified the default model &#39;static_synapse&#39; will be used.</span>
+
+<span class="sd">    All other parameters can be scalars, arrays or distributions.</span>
+<span class="sd">    In the case of scalar parameters, all keys must be doubles except for &#39;receptor_type&#39; which must be</span>
+<span class="sd">    initialised with an integer.</span>
+<span class="sd">    Parameter arrays are only available for the rules &#39;one_to_one&#39; and &#39;all_to_all&#39;. For &#39;one_to_one&#39; the</span>
+<span class="sd">    array has to be a one-dimensional NumPy array with length len(pre). For &#39;all_to_all&#39; the array has</span>
+<span class="sd">    to be a two-dimensional NumPy array with shape (len(post), len(pre)), therefore the rows describe the</span>
+<span class="sd">    target and the columns the source neurons.</span>
+<span class="sd">    Any distributed parameter must be initialised with a further dictionary specifying the distribution</span>
+<span class="sd">    type (&#39;distribution&#39;, e.g. &#39;normal&#39;) and any distribution-specific parameters (e.g. &#39;mu&#39; and &#39;sigma&#39;).</span>
+
+<span class="sd">    Available distributions are given in the rdevdict, the most common ones (and their</span>
+<span class="sd">    associated parameters) are:</span>
+
+<span class="sd">    - &#39;normal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
+<span class="sd">    - &#39;normal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">    - &#39;lognormal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
+<span class="sd">    - &#39;lognormal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">    - &#39;uniform&#39; with &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">    - &#39;uniform_int&#39; with &#39;low&#39;, &#39;high&#39;</span>
+
+<span class="sd">    To see all available distributions, run:</span>
+<span class="sd">    nest.slirun(’rdevdict info’)</span>
+<span class="sd">    To get information on a particular distribution, e.g. &#39;binomial&#39;, run:</span>
+<span class="sd">    nest.help(’rdevdict::binomial’)</span>
+
+<span class="sd">    Example choices for the syn_spec are:</span>
+<span class="sd">    - &#39;stdp_synapse&#39;</span>
+<span class="sd">    - {&#39;weight&#39;: 2.4, &#39;receptor_type&#39;: 1}</span>
+<span class="sd">    - {&#39;model&#39;: &#39;stdp_synapse&#39;,</span>
+<span class="sd">       &#39;weight&#39;: 2.5,</span>
+<span class="sd">       &#39;delay&#39;: {&#39;distribution&#39;: &#39;uniform&#39;, &#39;low&#39;: 0.8, &#39;high&#39;: 2.5},</span>
+<span class="sd">       &#39;alpha&#39;: {&#39;distribution&#39;: &#39;normal_clipped&#39;, &#39;low&#39;: 0.5, &#39;mu&#39;: 5.0, &#39;sigma&#39;: 1.0}</span>
+<span class="sd">      }</span>
+
+<span class="sd">    Note: model is alias for syn_spec for backward compatibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">deprecation_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;The argument &#39;model&#39; is there for backward compatibility with the old &quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Connect function and will be removed in a future version of NEST. Please change the name &quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;of the keyword argument from &#39;model&#39; to &#39;syn_spec&#39;. For details, see the &quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;documentation at:</span><span class="se">\n</span><span class="s2">http://www.nest-simulator.org/connection_management&quot;</span><span class="p">])</span>
+        <span class="n">show_deprecation_warning</span><span class="p">(</span><span class="s2">&quot;BackwardCompatibilityConnect&quot;</span><span class="p">,</span>
+                                 <span class="n">text</span><span class="o">=</span><span class="n">deprecation_text</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">syn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;model&#39; is an alias for &#39;syn_spec&#39; and cannot be used together with &#39;syn_spec&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+    <span class="n">sps</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+
+    <span class="c1"># default rule</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="s1">&#39;all_to_all&#39;</span>
+
+    <span class="k">if</span> <span class="n">conn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sps</span><span class="p">(</span><span class="n">conn_spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_string</span><span class="p">(</span><span class="n">conn_spec</span><span class="p">):</span>
+            <span class="n">rule</span> <span class="o">=</span> <span class="n">conn_spec</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;cvlit&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn_spec</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">rule</span> <span class="o">=</span> <span class="n">conn_spec</span><span class="p">[</span><span class="s1">&#39;rule&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;conn_spec needs to be a string or dictionary.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/Connect /conn_spec GetOption&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">syn_spec</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="k">if</span> <span class="n">syn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_string</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">):</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;cvlit&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">syn_spec</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+                <span class="c1"># if value is a list, it is converted to a numpy array</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">generic</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">rule</span> <span class="o">==</span> <span class="s1">&#39;one_to_one&#39;</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;&#39; has to be an array of dimension &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;, a scalar or a dictionary.&quot;</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">syn_spec</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;&#39; has the wrong type. One-dimensional parameter arrays can only be used in conjunction with rule &#39;one_to_one&#39;.&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">rule</span> <span class="o">==</span> <span class="s1">&#39;all_to_all&#39;</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+                                <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;&#39; has to be an array of dimension &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; (n_target x n_sources), a scalar or a dictionary.&quot;</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">syn_spec</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;&#39; has the wrong type. Two-dimensional parameter arrays can only be used in conjunction with rule &#39;all_to_all&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;syn_spec needs to be a string or dictionary.&quot;</span><span class="p">)</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="DataConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.DataConnect">[docs]</a><span class="k">def</span> <span class="nf">DataConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect neurons from lists of connection data.</span>
+
+<span class="sd">    Variant 1.</span>
+<span class="sd">    pre: [gid_1, ... gid_n]</span>
+<span class="sd">    params: [ {param1}, ..., {param_n} ]</span>
+<span class="sd">    model= &#39;synapse_model&#39;</span>
+
+<span class="sd">    Variant 2:</span>
+<span class="sd">    pre = [ {synapse_state1}, ..., {synapse_state_n}]</span>
+<span class="sd">    params=None</span>
+<span class="sd">    model=None</span>
+
+<span class="sd">    Variant 1 of DataConnect connects each neuron in pre to the targets given in params, using synapse type model.</span>
+<span class="sd">    The dictionary parames must contain at least the following keys:</span>
+<span class="sd">    &#39;target&#39;</span>
+<span class="sd">    &#39;weight&#39;</span>
+<span class="sd">    &#39;delay&#39;</span>
+<span class="sd">    each resolving to a list or numpy.ndarray of values. Depending on the synapse model, other parameters can be given</span>
+<span class="sd">    in the same format. All arrays in params must have the same length as &#39;target&#39;.</span>
+
+<span class="sd">    Variant 2 of DataConnect will connect neurons according to a list of synapse status dictionaries,</span>
+<span class="sd">    as obtained from GetStatus.</span>
+<span class="sd">    Note: During connection, status dictionary misses will not raise errors, even if</span>
+<span class="sd">    the kernel property &#39;dict_miss_is_error&#39; is True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_coercible_to_sli_array</span><span class="p">(</span><span class="n">pre</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;pre must be a list of nodes or connection dictionaries&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_coercible_to_sli_array</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;params must be a list of dictionaries&quot;</span><span class="p">)</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;({0}) DataConnect_i_D_s &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">sps</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">sr</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Call the variant where all connections are given explicitly</span>
+
+        <span class="c1"># Disable dict checking, because most models can&#39;t re-use their own status dict</span>
+        <span class="n">dict_miss</span> <span class="o">=</span> <span class="n">GetKernelStatus</span><span class="p">(</span><span class="s1">&#39;dict_miss_is_error&#39;</span><span class="p">)</span>
+        <span class="n">SetKernelStatus</span><span class="p">({</span><span class="s1">&#39;dict_miss_is_error&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+
+        <span class="n">sps</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;DataConnect_a&#39;</span><span class="p">)</span>
+
+        <span class="n">SetKernelStatus</span><span class="p">({</span><span class="s1">&#39;dict_miss_is_error&#39;</span><span class="p">:</span> <span class="n">dict_miss</span><span class="p">})</span></div>
+
+
+<span class="nd">@check_stack</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="n">alt_func_name</span><span class="o">=</span><span class="s1">&#39;Connect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="RandomDivergentConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.RandomDivergentConnect">[docs]</a><span class="k">def</span> <span class="nf">RandomDivergentConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect each neuron in pre to n randomly selected neurons from</span>
+<span class="sd">    post. pre and post have to be lists. If weight is given (as a</span>
+<span class="sd">    single float or as list of floats), delay also has to be given as</span>
+<span class="sd">    float or as list of floats. options is a dictionary specifying</span>
+<span class="sd">    options to the RandomDivergentConnect function: allow_autapses,</span>
+<span class="sd">    allow_multapses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;number of neurons n should be an integer&quot;</span><span class="p">)</span>
+
+    <span class="c1"># store current options, set desired options</span>
+    <span class="n">old_options</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">old_options</span> <span class="o">=</span> <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;GetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomDivergentConnect&#39;</span><span class="p">,</span>
+                               <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">old_options</span><span class="p">[</span><span class="s1">&#39;DefaultOptions&#39;</span><span class="p">]</span> <span class="c1"># in the way when restoring</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;SetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomDivergentConnect&#39;</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                 <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sli_func</span><span class="p">(</span>
+            <span class="s1">&#39;/m Set /n Set /post Set { n post m RandomDivergentConnect } forall&#39;</span><span class="p">,</span>
+            <span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;weight must be a float, or sequence of floats of length 1 or n&quot;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">delay</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,),</span> <span class="s2">&quot;delay&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;delay must be a float, or sequence of floats of length 1 or n&quot;</span><span class="p">)</span>
+
+        <span class="n">sli_func</span><span class="p">(</span>
+            <span class="s1">&#39;/m Set /d Set /w Set /n Set /post Set { n post w d m RandomDivergentConnect } forall&#39;</span><span class="p">,</span>
+            <span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="c1"># restore old options</span>
+    <span class="k">if</span> <span class="n">old_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;SetOptions&#39;</span><span class="p">,</span> <span class="s1">&#39;/RandomDivergentConnect&#39;</span><span class="p">,</span> <span class="n">old_options</span><span class="p">,</span>
+                 <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;Both &#39;weight&#39; and &#39;delay&#39; have to be given.&quot;</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">_is_subnet_instance</span><span class="p">(</span><span class="n">gids</span><span class="p">):</span>
+    <span class="s2">&quot;Returns true if all gids point to subnet or derived type.&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">GetChildren</span><span class="p">(</span><span class="n">gids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">except</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="CGConnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.CGConnect">[docs]</a><span class="k">def</span> <span class="nf">CGConnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">cg</span><span class="p">,</span> <span class="n">parameter_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;static_synapse&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect neurons from pre to neurons from post using connectivity</span>
+<span class="sd">    specified by the connection generator cg. pre and post are either</span>
+<span class="sd">    both lists containing 1 subnet, or lists of gids. parameter_map is</span>
+<span class="sd">    a dictionary mapping names of values such as weight and delay to</span>
+<span class="sd">    value set positions. This function is only available if NEST was</span>
+<span class="sd">    compiled with support for libneurosim.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;statusdict/have_libneurosim ::&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">spp</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;NEST was not compiled with support for libneurosim: CGConnect is not available.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parameter_map</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">parameter_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">_is_subnet_instance</span><span class="p">(</span><span class="n">pre</span><span class="p">[:</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_subnet_instance</span><span class="p">(</span><span class="n">post</span><span class="p">[:</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;if pre is a subnet, post also has to be a subnet&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;the length of pre and post has to be 1 if subnets are given&quot;</span><span class="p">)</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;CGConnect&#39;</span><span class="p">,</span> <span class="n">cg</span><span class="p">,</span> <span class="n">pre</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">post</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parameter_map</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sli_func</span><span class="p">(</span><span class="s1">&#39;CGConnect&#39;</span><span class="p">,</span> <span class="n">cg</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">parameter_map</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">model</span><span class="p">,</span> <span class="n">litconv</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="CGParse"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.CGParse">[docs]</a><span class="k">def</span> <span class="nf">CGParse</span><span class="p">(</span><span class="n">xml_filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse an XML file and return the correcponding connection</span>
+<span class="sd">    generator cg. The library to provide the parsing can be selected</span>
+<span class="sd">    by CGSelectImplementation().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;statusdict/have_libneurosim ::&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">spp</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;NEST was not compiled with support for libneurosim: CGParse is not available.&quot;</span><span class="p">)</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">xml_filename</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;CGParse&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">spp</span><span class="p">()</span></div>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="CGSelectImplementation"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.CGSelectImplementation">[docs]</a><span class="k">def</span> <span class="nf">CGSelectImplementation</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">library</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Select a library to provide a parser for XML files and associate</span>
+<span class="sd">    an XML tag with the library. XML files can be read by CGParse().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;statusdict/have_libneurosim ::&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">spp</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="s2">&quot;NEST was not compiled with support for libneurosim: CGSelectImplementation is not available.&quot;</span><span class="p">)</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+    <span class="n">sps</span><span class="p">(</span><span class="n">library</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;CGSelectImplementation&quot;</span><span class="p">)</span></div>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="DisconnectOneToOne"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.DisconnectOneToOne">[docs]</a><span class="k">def</span> <span class="nf">DisconnectOneToOne</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">syn_spec</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Disconnect a currently existing synapse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">sps</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">syn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sps</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_string</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">):</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;cvlit&quot;</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;Disconnect&#39;</span><span class="p">)</span></div>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="Disconnect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.Disconnect">[docs]</a><span class="k">def</span> <span class="nf">Disconnect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">conn_spec</span><span class="p">,</span> <span class="n">syn_spec</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Disconnect pre neurons from post neurons.</span>
+
+<span class="sd">    Neurons in pre and post are disconnected using the specified disconnection</span>
+<span class="sd">    rule (one-to-one by default) and synapse type (static_synapse by default).</span>
+<span class="sd">    Details depend on the disconnection rule.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">    Disconnect does not iterate over subnets, it only connects explicitly</span>
+<span class="sd">    specified nodes.</span>
+
+<span class="sd">    pre - presynaptic neurons, given as list of GIDs</span>
+<span class="sd">    post - presynaptic neurons, given as list of GIDs</span>
+<span class="sd">    conn_spec - name or dictionary specifying disconnection rule, see below</span>
+<span class="sd">    syn_spec - name or dictionary specifying synapses, see below</span>
+
+<span class="sd">    Disconnection specs:</span>
+
+<span class="sd">    Apply the same rules as for connectivity specs in the connection method</span>
+
+<span class="sd">    Available rules and the associated parameters are:</span>
+<span class="sd">     - &#39;one_to_one&#39;</span>
+<span class="sd">     - &#39;all_to_all&#39;</span>
+
+<span class="sd">    Possible choices of the conn_spec are:</span>
+<span class="sd">    - &#39;one_to_one&#39;</span>
+<span class="sd">    - &#39;all_to_all&#39;</span>
+
+<span class="sd">    Synapse:</span>
+
+<span class="sd">    The synapse model and its properties can be inserted either as a string describing</span>
+<span class="sd">    one synapse model (synapse models are listed in the synapsedict)</span>
+<span class="sd">    or as a dictionary as described below.</span>
+<span class="sd">    If no synapse model is specified the default model &#39;static_synapse&#39; will be used.</span>
+<span class="sd">    Available keys in the synapse dictionary are &#39;model&#39;, &#39;weight&#39;, &#39;delay&#39;,</span>
+<span class="sd">    &#39;receptor_type&#39; and parameters specific to the synapse model choosen.</span>
+<span class="sd">    All parameters are optional and if not specified will use the default values determined</span>
+<span class="sd">    by the current synapse model.</span>
+<span class="sd">    &#39;model&#39; determines the synapse type, taken from pre-defined synapse types in NEST or</span>
+<span class="sd">    manually specified synapses created via CopyModel().</span>
+<span class="sd">    All other parameters are not currently implemented</span>
+
+<span class="sd">    Note: model is alias for syn_spec for backward compatibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;cvgidcollection&#39;</span><span class="p">)</span>
+    <span class="n">sps</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;cvgidcollection&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">conn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sps</span><span class="p">(</span><span class="n">conn_spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_string</span><span class="p">(</span><span class="n">conn_spec</span><span class="p">):</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;cvlit&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">syn_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sps</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_string</span><span class="p">(</span><span class="n">syn_spec</span><span class="p">):</span>
+            <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;cvlit&quot;</span><span class="p">)</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;Disconnect_g_g_D_D&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.tests.test_sp.test_growth_curves &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="nest" href="../../../nest.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/nest.html">nest package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../nest.html">nest</a> &raquo;</li>
+      
+    <li>nest.tests.test_sp.test_growth_curves</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nest.tests.test_sp.test_growth_curves</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># test_growth_curves.py</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of NEST.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2004 The NEST Initiative</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with NEST.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">testing</span>
+<span class="kn">import</span> <span class="nn">pylab</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">nest</span>
+<span class="kn">from</span> <span class="nn">nest</span> <span class="kn">import</span> <span class="n">raster_plot</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="SynapticElementIntegrator"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.SynapticElementIntegrator">[docs]</a><span class="k">class</span> <span class="nc">SynapticElementIntegrator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic class which describes how to compute the number of Synaptic Element based on Ca value</span>
+<span class="sd">    Each derived class should overwrite the get_se(self, t) method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tau_ca</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">,</span> <span class="n">beta_ca</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param tau_ca (float): time constant of Ca decay</span>
+<span class="sd">        :param beta_ca (float): each spike increase Ca value by this value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_ca</span> <span class="o">=</span> <span class="n">tau_ca</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_ca</span> <span class="o">=</span> <span class="n">beta_ca</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_minus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="SynapticElementIntegrator.reset"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.SynapticElementIntegrator.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_minus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="SynapticElementIntegrator.handle_spike"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.SynapticElementIntegrator.handle_spike">[docs]</a>    <span class="k">def</span> <span class="nf">handle_spike</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add beta_ca to the value of Ca at t = spike time</span>
+<span class="sd">        Also update the number of synaptic element</span>
+
+<span class="sd">        :param t (float): spike time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span>
+        <span class="c1"># Update the number of synaptic element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_se</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="c1"># update Ca value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ca</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta_ca</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span> <span class="o">=</span> <span class="n">t</span></div>
+
+<div class="viewcode-block" id="SynapticElementIntegrator.get_ca"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.SynapticElementIntegrator.get_ca">[docs]</a>    <span class="k">def</span> <span class="nf">get_ca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t (float): current time</span>
+
+<span class="sd">        :return: Ca value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span>
+        <span class="n">ca</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ca_minus</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_ca</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ca</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ca</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="SynapticElementIntegrator.get_se"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.SynapticElementIntegrator.get_se">[docs]</a>    <span class="k">def</span> <span class="nf">get_se</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t (float): current time</span>
+
+<span class="sd">        :return: Number of synaptic element</span>
+
+<span class="sd">        Should be overwritten</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">0.0</span></div></div>
+
+
+<div class="viewcode-block" id="LinearExactSEI"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.LinearExactSEI">[docs]</a><span class="k">class</span> <span class="nc">LinearExactSEI</span><span class="p">(</span><span class="n">SynapticElementIntegrator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the number of synaptic element corresponding to a linear growth curve</span>
+<span class="sd">    dse/dCa = nu * (1 - Ca/eps)</span>
+<span class="sd">    Use the exact solution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param eps: fix point</span>
+<span class="sd">        :param growth_rate: scaling of the growth curve</span>
+
+<span class="sd">        .. seealso:: SynapticElementIntegrator()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinearExactSEI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">=</span> <span class="n">growth_rate</span>
+
+<div class="viewcode-block" id="LinearExactSEI.get_se"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.LinearExactSEI.get_se">[docs]</a>    <span class="k">def</span> <span class="nf">get_se</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t (float): current time</span>
+<span class="sd">        :return: Number of synaptic element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span>
+        <span class="n">se</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_ca</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_ca</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ca_minus</span>
+            <span class="p">)</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span>
+        <span class="k">if</span> <span class="n">se</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">se</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div></div>
+
+
+<div class="viewcode-block" id="LinearNumericSEI"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.LinearNumericSEI">[docs]</a><span class="k">class</span> <span class="nc">LinearNumericSEI</span><span class="p">(</span><span class="n">SynapticElementIntegrator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the number of synaptic element corresponding to a linear growth curve</span>
+<span class="sd">    dse/dCa = nu * (1 - Ca/eps)</span>
+<span class="sd">    Use numerical integration (see scipy.integrate.quad)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param eps: fix point</span>
+<span class="sd">        :param growth_rate: scaling of the growth curve</span>
+
+<span class="sd">        .. seealso:: SynapticElementIntegrator()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinearNumericSEI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">=</span> <span class="n">growth_rate</span>
+
+<div class="viewcode-block" id="LinearNumericSEI.get_se"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.LinearNumericSEI.get_se">[docs]</a>    <span class="k">def</span> <span class="nf">get_se</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t (float): current time</span>
+<span class="sd">        :return: Number of synaptic element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span>
+        <span class="n">se</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span> <span class="o">+</span> <span class="n">quad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">growth_curve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span><span class="p">,</span> <span class="n">t</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">se</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">se</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="LinearNumericSEI.growth_curve"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.LinearNumericSEI.growth_curve">[docs]</a>    <span class="k">def</span> <span class="nf">growth_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ca</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="GaussianNumericSEI"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.GaussianNumericSEI">[docs]</a><span class="k">class</span> <span class="nc">GaussianNumericSEI</span><span class="p">(</span><span class="n">SynapticElementIntegrator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the number of synaptic element corresponding to a linear growth curve</span>
+<span class="sd">    dse/dCa = nu * (2 * exp( ((Ca - xi)/zeta)^2 ) - 1)</span>
+<span class="sd">    with:</span>
+<span class="sd">        xi = (eta + eps) / 2.0</span>
+<span class="sd">        zeta = (eta - eps) / (2.0 * sqrt(ln(2.0)))</span>
+
+<span class="sd">    Use numerical integration (see scipy.integrate.quad)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param eps: low fix point</span>
+<span class="sd">        :param eta: high fix point</span>
+<span class="sd">        :param growth_rate: scaling of the growth curve</span>
+
+<span class="sd">        .. seealso:: SynapticElementIntegrator()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GaussianNumericSEI</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zeta</span> <span class="o">=</span> <span class="p">(</span><span class="n">eta</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xi</span> <span class="o">=</span> <span class="p">(</span><span class="n">eta</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">=</span> <span class="n">growth_rate</span>
+
+<div class="viewcode-block" id="GaussianNumericSEI.get_se"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.GaussianNumericSEI.get_se">[docs]</a>    <span class="k">def</span> <span class="nf">get_se</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t (float): current time</span>
+<span class="sd">        :return: Number of synaptic element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span>
+        <span class="n">se</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_minus</span> <span class="o">+</span> <span class="n">quad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">growth_curve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_minus</span><span class="p">,</span> <span class="n">t</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">se</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">se</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="GaussianNumericSEI.growth_curve"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.GaussianNumericSEI.growth_curve">[docs]</a>    <span class="k">def</span> <span class="nf">growth_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">growth_rate</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ca</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">xi</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeta</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestGrowthCurve"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve">[docs]</a><span class="k">class</span> <span class="nc">TestGrowthCurve</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Unittest class to test the GrowthCurve used with nest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestGrowthCurve.setUp"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">ResetKernel</span><span class="p">()</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">SetKernelStatus</span><span class="p">({</span><span class="s2">&quot;total_num_virtual_procs&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">ResetNetwork</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_time</span> <span class="o">=</span> <span class="mi">10000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_step</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="n">nest</span><span class="o">.</span><span class="n">SetKernelStatus</span><span class="p">({</span><span class="s1">&#39;structural_plasticity_update_interval&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_time</span> <span class="o">+</span> <span class="mi">1</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_nest</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_python</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_python</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># build</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pop</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;iaf_neuron&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">GetNodes</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;iaf_neuron&#39;</span><span class="p">},</span> <span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spike_detector</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;spike_detector&#39;</span><span class="p">)</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spike_detector</span><span class="p">,</span> <span class="s1">&#39;all_to_all&#39;</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;poisson_generator&#39;</span><span class="p">)</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">SetStatus</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;rate&quot;</span><span class="p">:</span> <span class="mf">800000.0</span><span class="p">})</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">,</span> <span class="s1">&#39;all_to_all&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGrowthCurve.simulate"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_step</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_nest</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ca_python</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_python</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">)))</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">t_i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ca_nest</span><span class="p">[</span><span class="n">n_i</span><span class="p">][</span><span class="n">t_i</span><span class="p">],</span> <span class="n">synaptic_elements</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">GetStatus</span><span class="p">([</span><span class="n">n</span><span class="p">],</span> <span class="p">(</span><span class="s1">&#39;Ca&#39;</span><span class="p">,</span> <span class="s1">&#39;synaptic_elements&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span><span class="p">[</span><span class="n">n_i</span><span class="p">][</span><span class="n">t_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">synaptic_elements</span><span class="p">[</span><span class="s1">&#39;se&#39;</span><span class="p">][</span><span class="s1">&#39;z&#39;</span><span class="p">]</span>
+            <span class="n">nest</span><span class="o">.</span><span class="n">Simulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_step</span><span class="p">)</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">GetStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spike_detector</span><span class="p">,</span> <span class="s1">&#39;events&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">spikes_all</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;times&#39;</span><span class="p">]</span>
+        <span class="n">senders_all</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;senders&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">):</span>
+            <span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes_all</span><span class="p">[</span><span class="n">senders_all</span> <span class="o">==</span> <span class="n">n</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">sei</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> <span class="k">for</span> <span class="n">sei</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">]</span>
+            <span class="n">spike_i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">t_i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">):</span>
+                <span class="k">while</span> <span class="n">spike_i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span> <span class="ow">and</span> <span class="n">spikes</span><span class="p">[</span><span class="n">spike_i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="p">:</span>
+                    <span class="p">[</span><span class="n">sei</span><span class="o">.</span><span class="n">handle_spike</span><span class="p">(</span><span class="n">spikes</span><span class="p">[</span><span class="n">spike_i</span><span class="p">])</span> <span class="k">for</span> <span class="n">sei</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">]</span>
+                    <span class="n">spike_i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">sei_i</span><span class="p">,</span> <span class="n">sei</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ca_python</span><span class="p">[</span><span class="n">sei_i</span><span class="p">,</span> <span class="n">t_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sei</span><span class="o">.</span><span class="n">get_ca</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">se_python</span><span class="p">[</span><span class="n">sei_i</span><span class="p">,</span> <span class="n">t_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sei</span><span class="o">.</span><span class="n">get_se</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">sei_i</span><span class="p">,</span> <span class="n">sei</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">):</span>
+                <span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_nest</span><span class="p">[</span><span class="n">n_i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ca_python</span><span class="p">[</span><span class="n">sei_i</span><span class="p">],</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+                <span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span><span class="p">[</span><span class="n">n_i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_python</span><span class="p">[</span><span class="n">sei_i</span><span class="p">],</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGrowthCurve.plot"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sei</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="p">):</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ca&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ca_nest</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ca_python</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s1">&#39;nest&#39;</span><span class="p">,</span> <span class="n">sei</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Synaptic Element&#39;</span><span class="p">)</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">se_python</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s1">&#39;nest&#39;</span><span class="p">,</span> <span class="n">sei</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+            <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;sp&#39;</span> <span class="o">+</span> <span class="n">sei</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+        <span class="n">raster_plot</span><span class="o">.</span><span class="n">from_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spike_detector</span><span class="p">)</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;sp_raster_plot.png&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGrowthCurve.test_linear_growth_curve"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.test_linear_growth_curve">[docs]</a>    <span class="k">def</span> <span class="nf">test_linear_growth_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">beta_ca</span> <span class="o">=</span> <span class="mf">0.0001</span>
+        <span class="n">tau_ca</span> <span class="o">=</span> <span class="mf">10000.0</span>
+        <span class="n">growth_rate</span> <span class="o">=</span> <span class="mf">0.0001</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.10</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">SetStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;beta_Ca&#39;</span><span class="p">:</span> <span class="n">beta_ca</span><span class="p">,</span> <span class="s1">&#39;tau_Ca&#39;</span><span class="p">:</span> <span class="n">tau_ca</span><span class="p">,</span>
+                                          <span class="s1">&#39;synaptic_elements&#39;</span><span class="p">:</span> <span class="p">{</span>
+                                              <span class="s1">&#39;se&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;growth_curve&#39;</span><span class="p">:</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;growth_rate&#39;</span><span class="p">:</span> <span class="n">growth_rate</span><span class="p">,</span>
+                                                     <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="n">eps</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}}})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LinearExactSEI</span><span class="p">(</span><span class="n">tau_ca</span><span class="o">=</span><span class="n">tau_ca</span><span class="p">,</span> <span class="n">beta_ca</span><span class="o">=</span><span class="n">beta_ca</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">growth_rate</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LinearNumericSEI</span><span class="p">(</span><span class="n">tau_ca</span><span class="o">=</span><span class="n">tau_ca</span><span class="p">,</span> <span class="n">beta_ca</span><span class="o">=</span><span class="n">beta_ca</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">growth_rate</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+
+        <span class="c1"># check that we got the same values from one run to another</span>
+        <span class="c1"># expected = self.se_nest[:, 10]</span>
+        <span class="c1">#print self.se_nest[:, 10].__repr__()</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.08376263</span><span class="p">,</span> <span class="mf">0.08374046</span><span class="p">,</span> <span class="mf">0.08376031</span><span class="p">,</span> <span class="mf">0.08376756</span><span class="p">,</span> <span class="mf">0.08375428</span><span class="p">,</span>
+                                <span class="mf">0.08378699</span><span class="p">,</span> <span class="mf">0.08376784</span><span class="p">,</span> <span class="mf">0.08369779</span><span class="p">,</span> <span class="mf">0.08374215</span><span class="p">,</span> <span class="mf">0.08370484</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">:</span>
+                <span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="mi">10</span><span class="p">],</span> <span class="n">expected</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span>
+                    <span class="n">decimal</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGrowthCurve.test_gaussian_growth_curve"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.test_gaussian_growth_curve">[docs]</a>    <span class="k">def</span> <span class="nf">test_gaussian_growth_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">beta_ca</span> <span class="o">=</span> <span class="mf">0.0001</span>
+        <span class="n">tau_ca</span> <span class="o">=</span> <span class="mf">10000.0</span>
+        <span class="n">growth_rate</span> <span class="o">=</span> <span class="mf">0.0001</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="mf">0.05</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.10</span>
+        <span class="n">nest</span><span class="o">.</span><span class="n">SetStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;beta_Ca&#39;</span><span class="p">:</span> <span class="n">beta_ca</span><span class="p">,</span> <span class="s1">&#39;tau_Ca&#39;</span><span class="p">:</span> <span class="n">tau_ca</span><span class="p">,</span>
+                                          <span class="s1">&#39;synaptic_elements&#39;</span><span class="p">:</span> <span class="p">{</span>
+                                              <span class="s1">&#39;se&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;growth_curve&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;growth_rate&#39;</span><span class="p">:</span> <span class="n">growth_rate</span><span class="p">,</span>
+                                                     <span class="s1">&#39;eta&#39;</span><span class="p">:</span> <span class="n">eta</span><span class="p">,</span> <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="n">eps</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}}})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">se_integrator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GaussianNumericSEI</span><span class="p">(</span><span class="n">tau_ca</span><span class="o">=</span><span class="n">tau_ca</span><span class="p">,</span> <span class="n">beta_ca</span><span class="o">=</span><span class="n">beta_ca</span><span class="p">,</span>
+                                                     <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">growth_rate</span><span class="o">=</span><span class="n">growth_rate</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+
+        <span class="c1"># check that we got the same values from one run to another</span>
+        <span class="c1"># expected = self.se_nest[:, 30]</span>
+        <span class="c1"># print self.se_nest[:, 30].__repr__()</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.10044035</span><span class="p">,</span> <span class="mf">0.10062526</span><span class="p">,</span> <span class="mf">0.1003149</span><span class="p">,</span> <span class="mf">0.10046311</span><span class="p">,</span> <span class="mf">0.1005713</span><span class="p">,</span>
+                                <span class="mf">0.10031755</span><span class="p">,</span> <span class="mf">0.10032216</span><span class="p">,</span> <span class="mf">0.10040191</span><span class="p">,</span> <span class="mf">0.10058179</span><span class="p">,</span> <span class="mf">0.10068598</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="p">:</span>
+                <span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">se_nest</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">local_nodes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="mi">30</span><span class="p">],</span> <span class="n">expected</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span>
+                    <span class="n">decimal</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGrowthCurve.tearDown"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.TestGrowthCurve.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># uncomment this line if you want to plot values</span>
+        <span class="c1"># self.plot()</span>
+        <span class="k">return</span></div></div>
+
+
+<div class="viewcode-block" id="suite"><a class="viewcode-back" href="../../../../modules/nest.tests.test_sp.html#nest.tests.test_sp.test_growth_curves.suite">[docs]</a><span class="k">def</span> <span class="nf">suite</span><span class="p">():</span>
+    <span class="n">test_suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">makeSuite</span><span class="p">(</span><span class="n">TestGrowthCurve</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">test_suite</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nest.lib.hl_api_models &mdash; Nest Simulator Python API 2.10.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Nest Simulator Python API 2.10.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="nest" href="../../nest.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Nest Simulator Python API
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/nest.html">nest package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Nest Simulator Python API</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../nest.html">nest</a> &raquo;</li>
+      
+    <li>nest.lib.hl_api_models</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nest.lib.hl_api_models</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># hl_api_models.py</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of NEST.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2004 The NEST Initiative</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># NEST is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with NEST.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions for model handling</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.hl_api_helper</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="Models"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_models.Models">[docs]</a><span class="k">def</span> <span class="nf">Models</span><span class="p">(</span><span class="n">mtype</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">sel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of all available models (neurons, devices and</span>
+<span class="sd">    synapses). Use mtype=&#39;nodes&#39; to only see neuron and device models,</span>
+<span class="sd">    mtype=&#39;synapses&#39; to only see synapse models. sel can be a string,</span>
+<span class="sd">    used to filter the result list and only return models containing</span>
+<span class="sd">    it.</span>
+
+<span class="sd">    Synapse model names ending with &#39;_hpc&#39; provide minimal memory</span>
+<span class="sd">    requirements by using thread-local target neuron IDs and fixing</span>
+<span class="sd">    the `rport` to 0.</span>
+<span class="sd">    Synapse model names ending with &#39;_lbl&#39; allow to assign an individual</span>
+<span class="sd">    integer label (`synapse_label`) to created synapses at the cost</span>
+<span class="sd">    of increased memory requirements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">mtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;synapses&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;type has to be one of &#39;all&#39;, &#39;nodes&#39; or &#39;synapses&#39;&quot;</span><span class="p">)</span>
+
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;nodes&quot;</span><span class="p">):</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;modeldict&quot;</span><span class="p">)</span>
+        <span class="n">models</span> <span class="o">+=</span> <span class="n">spp</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;synapses&quot;</span><span class="p">):</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;synapsedict&quot;</span><span class="p">)</span>
+        <span class="n">models</span> <span class="o">+=</span> <span class="n">spp</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">sel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">models</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">models</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">models</span><span class="p">)</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="ConnectionRules"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_models.ConnectionRules">[docs]</a><span class="k">def</span> <span class="nf">ConnectionRules</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of all connection rules.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;connruledict&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">spp</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="SetDefaults"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_models.SetDefaults">[docs]</a><span class="k">def</span> <span class="nf">SetDefaults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the default parameters of the given model to the values</span>
+<span class="sd">    specified in the params dictionary.</span>
+<span class="sd">    If val is given, params has to be the name of a model property.</span>
+<span class="sd">    New default values are used for all subsequently created instances</span>
+<span class="sd">    of the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_literal</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">params</span><span class="p">:</span> <span class="n">val</span><span class="p">}</span>
+
+    <span class="n">sps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">sr</span><span class="p">(</span><span class="s1">&#39;/{0} exch SetDefaults&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="GetDefaults"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_models.GetDefaults">[docs]</a><span class="k">def</span> <span class="nf">GetDefaults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a dictionary with the default parameters of the given</span>
+<span class="sd">    model, specified by a string.</span>
+<span class="sd">    If keys is given, it must be a string or a list of strings naming model properties.</span>
+<span class="sd">    GetDefaults then returns a single value or a list of values belonging to the keys given.</span>
+<span class="sd">    Examples:</span>
+<span class="sd">    GetDefaults(&#39;iaf_neuron&#39;,&#39;V_m&#39;) -&gt; -70.0</span>
+<span class="sd">    GetDefaults(&#39;iaf_neuron&#39;,[&#39;V_m&#39;, &#39;model&#39;) -&gt; [-70.0, &#39;iaf_neuron&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">keys</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;/{0} GetDefaults&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">is_literal</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;/{0} GetDefaults /{1} get&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+        <span class="n">keys_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;/{0} GetDefaults  [ {1} ] {{ 1 index exch get }} Map exch pop&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">keys_str</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;keys should be either a string or an iterable&quot;</span><span class="p">)</span>
+
+    <span class="n">sr</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">spp</span><span class="p">()</span></div>
+
+
+<span class="nd">@check_stack</span>
+<div class="viewcode-block" id="CopyModel"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_models.CopyModel">[docs]</a><span class="k">def</span> <span class="nf">CopyModel</span><span class="p">(</span><span class="n">existing</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a new model by copying an existing one. Default parameters</span>
+<span class="sd">    can be given as params, or else are taken from existing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">%s</span><span class="s2"> /</span><span class="si">%s</span><span class="s2"> 3 2 roll CopyModel&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">existing</span><span class="p">,</span> <span class="n">new</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sr</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">%s</span><span class="s2"> /</span><span class="si">%s</span><span class="s2"> CopyModel&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">existing</span><span class="p">,</span> <span class="n">new</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nest Initiative.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.10.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
