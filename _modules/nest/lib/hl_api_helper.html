@@ -171,25 +171,33 @@
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">textwrap</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># Don&#39;t decorate functions when building the documentation</span>
+<span class="n">IS_SPHINX_BUILD</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SPHINX_BUILD&#39;</span><span class="p">))</span>
+
+
 <span class="c1"># These flags are used to print deprecation warnings only once. The</span>
 <span class="c1"># corresponding functions will be removed in the 2.6 release of NEST.</span>
 
 <span class="n">_deprecation_warning</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;BackwardCompatibilityConnect&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
 
-<div class="viewcode-block" id="show_deprecation_warning"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_helper.show_deprecation_warning">[docs]</a><span class="k">def</span> <span class="nf">show_deprecation_warning</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>        
-    <span class="k">if</span> <span class="n">_deprecation_warning</span><span class="p">[</span><span class="n">func_name</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">alt_func_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">alt_func_name</span> <span class="o">=</span> <span class="s1">&#39;Connect&#39;</span>
-        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span>
-                       <span class="sd">&quot;&quot;&quot;\</span>
-<span class="sd">                       {0} is deprecated and will be removed in a future version of NEST.</span>
-<span class="sd">                       Please use {1} instead!</span>
-<span class="sd">                       For details, see http://www.nest-simulator.org/connection_management\</span>
-<span class="sd">                       &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="p">)</span>
-                   <span class="p">)</span>
 
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">text</span><span class="p">)</span>   <span class="c1"># add LF so text starts on new line</span>
+<div class="viewcode-block" id="get_deprecation_text"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_helper.get_deprecation_text">[docs]</a><span class="k">def</span> <span class="nf">get_deprecation_text</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">alt_func_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">alt_func_name</span> <span class="o">=</span> <span class="s1">&#39;Connect&#39;</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span>
+                   <span class="sd">&quot;&quot;&quot;\</span>
+<span class="sd">                   {0} is deprecated and will be removed in a future version of NEST.</span>
+<span class="sd">                   Please use {1} instead!</span>
+<span class="sd">                   For details, see http://www.nest-simulator.org/connection_management\</span>
+<span class="sd">                   &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="p">)</span>
+               <span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="show_deprecation_warning"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_helper.show_deprecation_warning">[docs]</a><span class="k">def</span> <span class="nf">show_deprecation_warning</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">deprecation_text</span><span class="p">):</span>        
+    <span class="k">if</span> <span class="n">_deprecation_warning</span><span class="p">[</span><span class="n">func_name</span><span class="p">]:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">deprecation_text</span><span class="p">)</span>   <span class="c1"># add LF so text starts on new line</span>
         <span class="n">_deprecation_warning</span><span class="p">[</span><span class="n">func_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span></div>
 
 <span class="c1"># Since we need to pass extra arguments to the decorator, we need a</span>
@@ -203,11 +211,21 @@
     <span class="k">def</span> <span class="nf">deprecated_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="n">_deprecation_warning</span><span class="p">[</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         
+        <span class="n">deprecation_text</span> <span class="o">=</span> <span class="n">get_deprecation_text</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+
         <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">show_deprecation_warning</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">alt_func_name</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>    
+            <span class="n">show_deprecation_warning</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">deprecation_text</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">new_func</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span> <span class="k">if</span> <span class="n">IS_SPHINX_BUILD</span> <span class="k">else</span> <span class="n">new_func</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s2"></span>
+
+<span class="s2">            .. warning::</span>
+<span class="s2">                </span><span class="si">%s</span><span class="s2"></span>
+<span class="s2">            &quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">deprecation_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">ret</span>
 
     <span class="k">return</span> <span class="n">deprecated_decorator</span></div>
 
@@ -279,7 +297,7 @@
                 <span class="k">raise</span> <span class="n">kernel</span><span class="o">.</span><span class="n">NESTError</span><span class="p">(</span><span class="n">etext</span> <span class="o">%</span> <span class="n">eargs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">return</span> <span class="n">stack_checker_func</span></div>
+    <span class="k">return</span> <span class="n">f</span> <span class="k">if</span> <span class="n">IS_SPHINX_BUILD</span> <span class="k">else</span> <span class="n">stack_checker_func</span></div>
 
 
 <div class="viewcode-block" id="check_stack"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_helper.check_stack">[docs]</a><span class="k">def</span> <span class="nf">check_stack</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>

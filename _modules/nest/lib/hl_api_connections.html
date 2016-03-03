@@ -456,90 +456,101 @@
 <div class="viewcode-block" id="Connect"><a class="viewcode-back" href="../../../modules/nest.lib.html#nest.lib.hl_api_connections.Connect">[docs]</a><span class="k">def</span> <span class="nf">Connect</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">conn_spec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">syn_spec</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Connect pre nodes to post nodes.</span>
-
+<span class="sd">    </span>
 <span class="sd">    Nodes in pre and post are connected using the specified connectivity</span>
 <span class="sd">    (all-to-all by default) and synapse type (static_synapse by default).</span>
 <span class="sd">    Details depend on the connectivity rule.</span>
-
+<span class="sd">    </span>
 <span class="sd">    Note:</span>
-<span class="sd">    Connect does not iterate over subnets, it only connects explicitly</span>
-<span class="sd">    specified nodes.</span>
-
-<span class="sd">    pre - presynaptic nodes, given as list of GIDs</span>
-<span class="sd">    post - postsynaptic nodes, given as list of GIDs</span>
-<span class="sd">    conn_spec - string, or dictionary specifying connectivity rule, see below</span>
-<span class="sd">    syn_spec - string, or dictionary specifying synapse model, see below</span>
-
-<span class="sd">    Connectivity specification (conn_spec):</span>
-
-<span class="sd">    Connectivity is specified either as a string containing the name of a</span>
-<span class="sd">    connectivity rule (default: &#39;all_to_all&#39;) or as a dictionary specifying</span>
-<span class="sd">    the rule and any mandatory rule-specific parameters (e.g. &#39;indegree&#39;).</span>
-<span class="sd">    In addition, switches setting permission for establishing self-connections</span>
-<span class="sd">    (&#39;autapses&#39;, default: True) and multiple connections between a pair of nodes</span>
-<span class="sd">    (&#39;multapses&#39;, default: True) can be contained in the dictionary.</span>
-
+<span class="sd">        Connect does not iterate over subnets, it only connects explicitly</span>
+<span class="sd">        specified nodes.</span>
+<span class="sd">        </span>
+<span class="sd">        Args</span>
+<span class="sd">            pre: presynaptic nodes, given as list of GIDs</span>
+<span class="sd">            post: postsynaptic nodes, given as list of GIDs</span>
+<span class="sd">            conn_spec: string, or dictionary specifying connectivity rule, see below</span>
+<span class="sd">            syn_spec: string, or dictionary specifying synapse model, see below</span>
+<span class="sd">        </span>
+<span class="sd">        Connectivity specification (conn_spec):</span>
+<span class="sd">        </span>
+<span class="sd">        Connectivity is specified either as a string containing the name of a</span>
+<span class="sd">        connectivity rule (default: &#39;all_to_all&#39;) or as a dictionary specifying</span>
+<span class="sd">        the rule and any mandatory rule-specific parameters (e.g. &#39;indegree&#39;).</span>
+<span class="sd">        In addition, switches setting permission for establishing self-connections</span>
+<span class="sd">        (&#39;autapses&#39;, default: True) and multiple connections between a pair of nodes</span>
+<span class="sd">        (&#39;multapses&#39;, default: True) can be contained in the dictionary.</span>
+<span class="sd">    </span>
 <span class="sd">    Available rules and their associated parameters are:</span>
-<span class="sd">     - &#39;all_to_all&#39; (default)</span>
-<span class="sd">     - &#39;one_to_one&#39;</span>
-<span class="sd">     - &#39;fixed_indegree&#39;, &#39;indegree&#39;</span>
-<span class="sd">     - &#39;fixed_outdegree&#39;, &#39;outdegree&#39;</span>
-<span class="sd">     - &#39;fixed_total_number&#39;, &#39;N&#39;</span>
-<span class="sd">     - &#39;pairwise_bernoulli&#39;, &#39;p&#39;</span>
-
-<span class="sd">    Example choices for the conn_spec are:</span>
-<span class="sd">    - &#39;one_to_one&#39;</span>
-<span class="sd">    - {&#39;rule&#39;: &#39;fixed_indegree&#39;, &#39;indegree&#39;: 2500, &#39;autapses&#39;: False}</span>
-<span class="sd">    - {&#39;rule&#39;: &#39;pairwise_bernoulli&#39;, &#39;p&#39;: 0.1}</span>
-
-<span class="sd">    Synapse specification (syn_spec):</span>
-
-<span class="sd">    The synapse model and its properties can be given either as a string identifying</span>
-<span class="sd">    a specific synapse model (default: &#39;static_synapse&#39;) or as a dictionary</span>
-<span class="sd">    specifying the synapse model and its parameters.</span>
-
-<span class="sd">    Available keys in the synapse specification dictionary are &#39;model&#39;, &#39;weight&#39;,</span>
-<span class="sd">    &#39;delay&#39;, &#39;receptor_type&#39; and any parameters specific to the selected synapse model.</span>
-<span class="sd">    All parameters are optional and if not specified, the default values of the synapse</span>
-<span class="sd">    model will be used. The key &#39;model&#39; identifies the synapse model, this can be one</span>
-<span class="sd">    of NEST&#39;s built-in synapse models or a user-defined model created via CopyModel().</span>
-<span class="sd">    If &#39;model&#39; is not specified the default model &#39;static_synapse&#39; will be used.</span>
-
-<span class="sd">    All other parameters can be scalars, arrays or distributions.</span>
-<span class="sd">    In the case of scalar parameters, all keys must be doubles except for &#39;receptor_type&#39; which must be</span>
-<span class="sd">    initialised with an integer.</span>
-<span class="sd">    Parameter arrays are only available for the rules &#39;one_to_one&#39; and &#39;all_to_all&#39;. For &#39;one_to_one&#39; the</span>
-<span class="sd">    array has to be a one-dimensional NumPy array with length len(pre). For &#39;all_to_all&#39; the array has</span>
-<span class="sd">    to be a two-dimensional NumPy array with shape (len(post), len(pre)), therefore the rows describe the</span>
-<span class="sd">    target and the columns the source neurons.</span>
-<span class="sd">    Any distributed parameter must be initialised with a further dictionary specifying the distribution</span>
-<span class="sd">    type (&#39;distribution&#39;, e.g. &#39;normal&#39;) and any distribution-specific parameters (e.g. &#39;mu&#39; and &#39;sigma&#39;).</span>
-
-<span class="sd">    Available distributions are given in the rdevdict, the most common ones (and their</span>
-<span class="sd">    associated parameters) are:</span>
-
-<span class="sd">    - &#39;normal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
-<span class="sd">    - &#39;normal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
-<span class="sd">    - &#39;lognormal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
-<span class="sd">    - &#39;lognormal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
-<span class="sd">    - &#39;uniform&#39; with &#39;low&#39;, &#39;high&#39;</span>
-<span class="sd">    - &#39;uniform_int&#39; with &#39;low&#39;, &#39;high&#39;</span>
-
-<span class="sd">    To see all available distributions, run:</span>
-<span class="sd">    nest.slirun(’rdevdict info’)</span>
-<span class="sd">    To get information on a particular distribution, e.g. &#39;binomial&#39;, run:</span>
-<span class="sd">    nest.help(’rdevdict::binomial’)</span>
-
-<span class="sd">    Example choices for the syn_spec are:</span>
-<span class="sd">    - &#39;stdp_synapse&#39;</span>
-<span class="sd">    - {&#39;weight&#39;: 2.4, &#39;receptor_type&#39;: 1}</span>
-<span class="sd">    - {&#39;model&#39;: &#39;stdp_synapse&#39;,</span>
-<span class="sd">       &#39;weight&#39;: 2.5,</span>
-<span class="sd">       &#39;delay&#39;: {&#39;distribution&#39;: &#39;uniform&#39;, &#39;low&#39;: 0.8, &#39;high&#39;: 2.5},</span>
-<span class="sd">       &#39;alpha&#39;: {&#39;distribution&#39;: &#39;normal_clipped&#39;, &#39;low&#39;: 0.5, &#39;mu&#39;: 5.0, &#39;sigma&#39;: 1.0}</span>
-<span class="sd">      }</span>
-
-<span class="sd">    Note: model is alias for syn_spec for backward compatibility.</span>
+<span class="sd">         - &#39;all_to_all&#39; (default)</span>
+<span class="sd">         - &#39;one_to_one&#39;</span>
+<span class="sd">         - &#39;fixed_indegree&#39;, &#39;indegree&#39;</span>
+<span class="sd">         - &#39;fixed_outdegree&#39;, &#39;outdegree&#39;</span>
+<span class="sd">         - &#39;fixed_total_number&#39;, &#39;N&#39;</span>
+<span class="sd">         - &#39;pairwise_bernoulli&#39;, &#39;p&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        Example choices for the conn_spec are:</span>
+<span class="sd">        - &#39;one_to_one&#39;</span>
+<span class="sd">        - {&#39;rule&#39;: &#39;fixed_indegree&#39;, &#39;indegree&#39;: 2500, &#39;autapses&#39;: False}</span>
+<span class="sd">        - {&#39;rule&#39;: &#39;pairwise_bernoulli&#39;, &#39;p&#39;: 0.1}</span>
+<span class="sd">        </span>
+<span class="sd">        Synapse specification (syn_spec):</span>
+<span class="sd">        </span>
+<span class="sd">        The synapse model and its properties can be given either as a string identifying</span>
+<span class="sd">        a specific synapse model (default: &#39;static_synapse&#39;) or as a dictionary</span>
+<span class="sd">        specifying the synapse model and its parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Available keys in the synapse specification dictionary are &#39;model&#39;, &#39;weight&#39;,</span>
+<span class="sd">        &#39;delay&#39;, &#39;receptor_type&#39; and any parameters specific to the selected synapse model.</span>
+<span class="sd">        All parameters are optional and if not specified, the default values of the synapse</span>
+<span class="sd">        model will be used. The key &#39;model&#39; identifies the synapse model, this can be one</span>
+<span class="sd">        of NEST&#39;s built-in synapse models or a user-defined model created via CopyModel().</span>
+<span class="sd">        If &#39;model&#39; is not specified the default model &#39;static_synapse&#39; will be used.</span>
+<span class="sd">        </span>
+<span class="sd">        All other parameters can be scalars, arrays or distributions.</span>
+<span class="sd">        In the case of scalar parameters, all keys must be doubles except for &#39;receptor_type&#39; which must be</span>
+<span class="sd">        initialised with an integer.</span>
+<span class="sd">        Parameter arrays are only available for the rules &#39;one_to_one&#39; and &#39;all_to_all&#39;. For &#39;one_to_one&#39; the</span>
+<span class="sd">        array has to be a one-dimensional NumPy array with length len(pre). For &#39;all_to_all&#39; the array has</span>
+<span class="sd">        to be a two-dimensional NumPy array with shape (len(post), len(pre)), therefore the rows describe the</span>
+<span class="sd">        target and the columns the source neurons.</span>
+<span class="sd">        Any distributed parameter must be initialised with a further dictionary specifying the distribution</span>
+<span class="sd">        type (&#39;distribution&#39;, e.g. &#39;normal&#39;) and any distribution-specific parameters (e.g. &#39;mu&#39; and &#39;sigma&#39;).</span>
+<span class="sd">        </span>
+<span class="sd">        Available distributions are given in the rdevdict, the most common ones (and their</span>
+<span class="sd">        associated parameters) are:</span>
+<span class="sd">        </span>
+<span class="sd">        - &#39;normal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
+<span class="sd">        - &#39;normal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">        - &#39;lognormal&#39; with &#39;mu&#39;, &#39;sigma&#39;</span>
+<span class="sd">        - &#39;lognormal_clipped&#39; with &#39;mu&#39;, &#39;sigma&#39;, &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">        - &#39;uniform&#39; with &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">        - &#39;uniform_int&#39; with &#39;low&#39;, &#39;high&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        To see all available distributions, run:</span>
+<span class="sd">        nest.slirun(’rdevdict info’)</span>
+<span class="sd">        To get information on a particular distribution, e.g. &#39;binomial&#39;, run:</span>
+<span class="sd">        nest.help(’rdevdict::binomial’)</span>
+<span class="sd">        </span>
+<span class="sd">        Example choices for the syn_spec are:</span>
+<span class="sd">        - &#39;stdp_synapse&#39;</span>
+<span class="sd">        - {&#39;weight&#39;: 2.4, &#39;receptor_type&#39;: 1}</span>
+<span class="sd">        - {&#39;model&#39;: &#39;stdp_synapse&#39;,</span>
+<span class="sd">           &#39;weight&#39;: 2.5,</span>
+<span class="sd">           &#39;delay&#39;: {&#39;distribution&#39;: &#39;uniform&#39;, &#39;low&#39;: 0.8, &#39;high&#39;: 2.5},</span>
+<span class="sd">           &#39;alpha&#39;: {&#39;distribution&#39;: &#39;normal_clipped&#39;, &#39;low&#39;: 0.5, &#39;mu&#39;: 5.0, &#39;sigma&#39;: 1.0}</span>
+<span class="sd">          }</span>
+<span class="sd">        </span>
+<span class="sd">        Note: model is alias for syn_spec for backward compatibility.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        pre (TYPE): Description</span>
+<span class="sd">        post (TYPE): Description</span>
+<span class="sd">        conn_spec (TYPE, optional): Description</span>
+<span class="sd">        syn_spec (TYPE, optional): Description</span>
+<span class="sd">        model (TYPE, optional): Description</span>
+<span class="sd">    </span>
+<span class="sd">    Raises:</span>
+<span class="sd">        kernel.NESTError: Description</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>

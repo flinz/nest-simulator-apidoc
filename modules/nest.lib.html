@@ -165,7 +165,7 @@
 <p>Functions for connection handling</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.CGConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>cg</em>, <em>parameter_map=None</em>, <em>model='static_synapse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect neurons from pre to neurons from post using connectivity
 specified by the connection generator cg. pre and post are either
 both lists containing 1 subnet, or lists of gids. parameter_map is
@@ -176,7 +176,7 @@ compiled with support for libneurosim.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.CGParse">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGParse</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGParse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGParse" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGParse</code><span class="sig-paren">(</span><em>xml_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGParse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGParse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse an XML file and return the correcponding connection
 generator cg. The library to provide the parsing can be selected
 by CGSelectImplementation().</p>
@@ -184,35 +184,40 @@ by CGSelectImplementation().</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.CGSelectImplementation">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGSelectImplementation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGSelectImplementation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGSelectImplementation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">CGSelectImplementation</code><span class="sig-paren">(</span><em>tag</em>, <em>library</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#CGSelectImplementation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.CGSelectImplementation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a library to provide a parser for XML files and associate
 an XML tag with the library. XML files can be read by CGParse().</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.Connect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">Connect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.Connect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">Connect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>conn_spec=None</em>, <em>syn_spec=None</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.Connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect pre nodes to post nodes.</p>
 <p>Nodes in pre and post are connected using the specified connectivity
 (all-to-all by default) and synapse type (static_synapse by default).
 Details depend on the connectivity rule.</p>
-<p>Note:
-Connect does not iterate over subnets, it only connects explicitly
+<dl class="docutils">
+<dt>Note:</dt>
+<dd><p class="first">Connect does not iterate over subnets, it only connects explicitly
 specified nodes.</p>
-<p>pre - presynaptic nodes, given as list of GIDs
-post - postsynaptic nodes, given as list of GIDs
-conn_spec - string, or dictionary specifying connectivity rule, see below
-syn_spec - string, or dictionary specifying synapse model, see below</p>
+<dl class="docutils">
+<dt>Args</dt>
+<dd>pre: presynaptic nodes, given as list of GIDs
+post: postsynaptic nodes, given as list of GIDs
+conn_spec: string, or dictionary specifying connectivity rule, see below
+syn_spec: string, or dictionary specifying synapse model, see below</dd>
+</dl>
 <p>Connectivity specification (conn_spec):</p>
-<p>Connectivity is specified either as a string containing the name of a
+<p class="last">Connectivity is specified either as a string containing the name of a
 connectivity rule (default: &#8216;all_to_all&#8217;) or as a dictionary specifying
 the rule and any mandatory rule-specific parameters (e.g. &#8216;indegree&#8217;).
 In addition, switches setting permission for establishing self-connections
 (&#8216;autapses&#8217;, default: True) and multiple connections between a pair of nodes
 (&#8216;multapses&#8217;, default: True) can be contained in the dictionary.</p>
-<dl class="docutils">
+</dd>
 <dt>Available rules and their associated parameters are:</dt>
-<dd><ul class="first last simple">
+<dd><blockquote class="first">
+<div><ul class="simple">
 <li>&#8216;all_to_all&#8217; (default)</li>
 <li>&#8216;one_to_one&#8217;</li>
 <li>&#8216;fixed_indegree&#8217;, &#8216;indegree&#8217;</li>
@@ -220,8 +225,7 @@ In addition, switches setting permission for establishing self-connections
 <li>&#8216;fixed_total_number&#8217;, &#8216;N&#8217;</li>
 <li>&#8216;pairwise_bernoulli&#8217;, &#8216;p&#8217;</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>Example choices for the conn_spec are:
 - &#8216;one_to_one&#8217;
 - {&#8216;rule&#8217;: &#8216;fixed_indegree&#8217;, &#8216;indegree&#8217;: 2500, &#8216;autapses&#8217;: False}
@@ -270,21 +274,37 @@ nest.help(’rdevdict::binomial’)</p>
 &#8216;alpha&#8217;: {&#8216;distribution&#8217;: &#8216;normal_clipped&#8217;, &#8216;low&#8217;: 0.5, &#8216;mu&#8217;: 5.0, &#8216;sigma&#8217;: 1.0}</div></blockquote>
 <p>}</p>
 </div></blockquote>
-<p>Note: model is alias for syn_spec for backward compatibility.</p>
+<p class="last">Note: model is alias for syn_spec for backward compatibility.</p>
+</dd>
+<dt>Args:</dt>
+<dd>pre (TYPE): Description
+post (TYPE): Description
+conn_spec (TYPE, optional): Description
+syn_spec (TYPE, optional): Description
+model (TYPE, optional): Description</dd>
+<dt>Raises:</dt>
+<dd>kernel.NESTError: Description</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.ConvergentConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">ConvergentConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#ConvergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.ConvergentConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">ConvergentConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>weight=None</em>, <em>delay=None</em>, <em>model='static_synapse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#ConvergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.ConvergentConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect all neurons in pre to each neuron in post. pre and post
 have to be lists. If weight is given (as a single float or as list
 of floats), delay also has to be given as float or as list of
 floats.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">ConvergentConnect is deprecated and will be removed in a future version of NEST. Please use Connect instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.DataConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DataConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DataConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DataConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DataConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>params=None</em>, <em>model='static_synapse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DataConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DataConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect neurons from lists of connection data.</p>
 <p>Variant 1.
 pre: [gid_1, ... gid_n]
@@ -309,7 +329,7 @@ the kernel property &#8216;dict_miss_is_error&#8217; is True.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.Disconnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">Disconnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.Disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">Disconnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>conn_spec</em>, <em>syn_spec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.Disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnect pre neurons from post neurons.</p>
 <p>Neurons in pre and post are disconnected using the specified disconnection
 rule (one-to-one by default) and synapse type (static_synapse by default).
@@ -351,22 +371,28 @@ All other parameters are not currently implemented</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.DisconnectOneToOne">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DisconnectOneToOne</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DisconnectOneToOne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DisconnectOneToOne" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DisconnectOneToOne</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>syn_spec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DisconnectOneToOne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DisconnectOneToOne" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnect a currently existing synapse</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.DivergentConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DivergentConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DivergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DivergentConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">DivergentConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>weight=None</em>, <em>delay=None</em>, <em>model='static_synapse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#DivergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.DivergentConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect each neuron in pre to all neurons in post. pre and post
 have to be lists. If weight is given (as a single float or as list
 of floats), delay also has to be given as float or as list of
 floats.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">DivergentConnect is deprecated and will be removed in a future version of NEST. Please use Connect instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.FindConnections">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">FindConnections</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#FindConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.FindConnections" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">FindConnections</code><span class="sig-paren">(</span><em>source</em>, <em>target=None</em>, <em>synapse_model=None</em>, <em>synapse_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#FindConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.FindConnections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an array of identifiers for connections that match the
 given parameters. Only source is mandatory and must be a list of
 one or more nodes. If target and/or synapse_model is/are given,
@@ -378,11 +404,17 @@ connections.</p>
 <dd>Use GetConnections() instead.</dd>
 </dl>
 <p>Note: synapse_type is alias for synapse_model for backward compatibility</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">FindConnections is deprecated and will be removed in a future version of NEST. Please use GetConnections instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.GetConnections">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">GetConnections</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#GetConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.GetConnections" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">GetConnections</code><span class="sig-paren">(</span><em>source=None</em>, <em>target=None</em>, <em>synapse_model=None</em>, <em>synapse_label=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#GetConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.GetConnections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an array of connection identifiers.</p>
 <p>Parameters:
 source - list of source GIDs
@@ -412,7 +444,7 @@ source-gid, target-gid, target-thread, synapse-id, port</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.OneToOneConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">OneToOneConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#OneToOneConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.OneToOneConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">OneToOneConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>params=None</em>, <em>delay=None</em>, <em>model='static_synapse'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#OneToOneConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.OneToOneConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make one-to-one connections of type model between the nodes in
 pre and the nodes in post. pre and post have to be lists of the
 same length. If params is given (as dictionary or list of
@@ -420,28 +452,46 @@ dictionaries), they are used as parameters for the connections. If
 params is given as a single float or as list of floats, it is used
 as weight(s), in which case delay also has to be given as float or
 as list of floats.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">OneToOneConnect is deprecated and will be removed in a future version of NEST. Please use Connect instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.RandomConvergentConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">RandomConvergentConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#RandomConvergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.RandomConvergentConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">RandomConvergentConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>n</em>, <em>weight=None</em>, <em>delay=None</em>, <em>model='static_synapse'</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#RandomConvergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.RandomConvergentConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect n randomly selected neurons from pre to each neuron in
 post. pre and post have to be lists. If weight is given (as a
 single float or as list of floats), delay also has to be given as
 float or as list of floats. options is a dictionary specifying
 options to the RandomConvergentConnect function: allow_autapses,
 allow_multapses.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">RandomConvergentConnect is deprecated and will be removed in a future version of NEST. Please use Connect instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_connections.RandomDivergentConnect">
-<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">RandomDivergentConnect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#RandomDivergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.RandomDivergentConnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_connections.</code><code class="descname">RandomDivergentConnect</code><span class="sig-paren">(</span><em>pre</em>, <em>post</em>, <em>n</em>, <em>weight=None</em>, <em>delay=None</em>, <em>model='static_synapse'</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_connections.html#RandomDivergentConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_connections.RandomDivergentConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect each neuron in pre to n randomly selected neurons from
 post. pre and post have to be lists. If weight is given (as a
 single float or as list of floats), delay also has to be given as
 float or as list of floats. options is a dictionary specifying
 options to the RandomDivergentConnect function: allow_autapses,
 allow_multapses.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">RandomDivergentConnect is deprecated and will be removed in a future version of NEST. Please use Connect instead! For details, see <a class="reference external" href="http://www.nest-simulator.org/connection_management">http://www.nest-simulator.org/connection_management</a></p>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -489,6 +539,11 @@ original function.</p>
 <code class="descclassname">nest.lib.hl_api_helper.</code><code class="descname">get_debug</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_helper.html#get_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_helper.get_debug" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the current value of the debug flag of the high-level API.</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="nest.lib.hl_api_helper.get_deprecation_text">
+<code class="descclassname">nest.lib.hl_api_helper.</code><code class="descname">get_deprecation_text</code><span class="sig-paren">(</span><em>func_name</em>, <em>alt_func_name=None</em>, <em>text=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_helper.html#get_deprecation_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_helper.get_deprecation_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_helper.get_unistring_type">
@@ -546,7 +601,7 @@ GIDs (non-negative integers)</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_helper.show_deprecation_warning">
-<code class="descclassname">nest.lib.hl_api_helper.</code><code class="descname">show_deprecation_warning</code><span class="sig-paren">(</span><em>func_name</em>, <em>alt_func_name=None</em>, <em>text=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_helper.html#show_deprecation_warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_helper.show_deprecation_warning" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_helper.</code><code class="descname">show_deprecation_warning</code><span class="sig-paren">(</span><em>func_name</em>, <em>deprecation_text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_helper.html#show_deprecation_warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_helper.show_deprecation_warning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -574,7 +629,7 @@ classes.</p>
 <p>Functions to get information on NEST.</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_info.GetStatus">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">GetStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#GetStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.GetStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">GetStatus</code><span class="sig-paren">(</span><em>nodes</em>, <em>keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#GetStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.GetStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the parameter dictionaries of the given list of nodes
 (identified by global ids) or connections (identified
 by handles as returned by GetConnections()). If keys is given, a
@@ -584,7 +639,7 @@ which case the returned list contains lists of values.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.SetStatus">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">SetStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#SetStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.SetStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">SetStatus</code><span class="sig-paren">(</span><em>nodes</em>, <em>params</em>, <em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#SetStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.SetStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameters of nodes (identified by global ids) or
 connections (identified by handles as returned by
 GetConnections()) to params, which may be a single dictionary or a
@@ -595,39 +650,39 @@ can be a single value or a list of the same size as nodes.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.authors">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">authors</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#authors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.authors" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">authors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#authors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.authors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the authors of NEST.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.get_argv">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">get_argv</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#get_argv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.get_argv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">get_argv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#get_argv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.get_argv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return argv as seen by NEST. This is similar to Python sys.argv
 but might have changed after MPI initialization.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.get_verbosity">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">get_verbosity</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#get_verbosity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.get_verbosity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">get_verbosity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#get_verbosity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.get_verbosity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return verbosity level of NEST&#8217;s messages.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.help">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">help</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.help" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">help</code><span class="sig-paren">(</span><em>obj=None</em>, <em>pager='less'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.help" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the help page for the given object using the given pager. The
 default pager is less.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.helpdesk">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">helpdesk</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#helpdesk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.helpdesk" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">helpdesk</code><span class="sig-paren">(</span><em>browser='firefox'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#helpdesk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.helpdesk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open the NEST helpdesk in the given browser. The default browser is firefox.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.message">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">message</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.message" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">message</code><span class="sig-paren">(</span><em>level</em>, <em>sender</em>, <em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print a message using NEST&#8217;s message system.</p>
 </dd></dl>
 
@@ -638,7 +693,7 @@ default pager is less.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.set_verbosity">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">set_verbosity</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#set_verbosity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.set_verbosity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">set_verbosity</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#set_verbosity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.set_verbosity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change verbosity level for NEST&#8217;s messages. level is a string and
 can be one of M_FATAL, M_ERROR, M_WARNING, or M_INFO.</p>
 </dd></dl>
@@ -655,13 +710,13 @@ can be one of M_FATAL, M_ERROR, M_WARNING, or M_INFO.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.sysinfo">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">sysinfo</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#sysinfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.sysinfo" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">sysinfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#sysinfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.sysinfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print information on the platform on which NEST was compiled.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_info.version">
-<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">version</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.version" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_info.</code><code class="descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_info.html#version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_info.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the NEST version.</p>
 </dd></dl>
 
@@ -671,20 +726,20 @@ can be one of M_FATAL, M_ERROR, M_WARNING, or M_INFO.</p>
 <p>Functions for model handling</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_models.ConnectionRules">
-<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">ConnectionRules</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#ConnectionRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.ConnectionRules" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">ConnectionRules</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#ConnectionRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.ConnectionRules" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of all connection rules.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_models.CopyModel">
-<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">CopyModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#CopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.CopyModel" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">CopyModel</code><span class="sig-paren">(</span><em>existing</em>, <em>new</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#CopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.CopyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new model by copying an existing one. Default parameters
 can be given as params, or else are taken from existing.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_models.GetDefaults">
-<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">GetDefaults</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#GetDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.GetDefaults" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">GetDefaults</code><span class="sig-paren">(</span><em>model</em>, <em>keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#GetDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.GetDefaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary with the default parameters of the given
 model, specified by a string.
 If keys is given, it must be a string or a list of strings naming model properties.
@@ -696,7 +751,7 @@ GetDefaults(&#8216;iaf_neuron&#8217;,[&#8216;V_m&#8217;, &#8216;model&#8217;) -&
 
 <dl class="function">
 <dt id="nest.lib.hl_api_models.Models">
-<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">Models</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#Models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.Models" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">Models</code><span class="sig-paren">(</span><em>mtype='all'</em>, <em>sel=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#Models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.Models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of all available models (neurons, devices and
 synapses). Use mtype=&#8217;nodes&#8217; to only see neuron and device models,
 mtype=&#8217;synapses&#8217; to only see synapse models. sel can be a string,
@@ -712,7 +767,7 @@ of increased memory requirements.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_models.SetDefaults">
-<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">SetDefaults</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#SetDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.SetDefaults" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_models.</code><code class="descname">SetDefaults</code><span class="sig-paren">(</span><em>model</em>, <em>params</em>, <em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_models.html#SetDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_models.SetDefaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the default parameters of the given model to the values
 specified in the params dictionary.
 If val is given, params has to be the name of a model property.
@@ -741,7 +796,7 @@ of the model.</p>
 <p>Functions for node handling</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_nodes.Create">
-<code class="descclassname">nest.lib.hl_api_nodes.</code><code class="descname">Create</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_nodes.html#Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_nodes.Create" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_nodes.</code><code class="descname">Create</code><span class="sig-paren">(</span><em>model</em>, <em>n=1</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_nodes.html#Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_nodes.Create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create n instances of type model. Parameters for the new nodes can
 are given as params (a single dictionary or a list of dictionaries
 with size n). If omitted, the model&#8217;s defaults are used.</p>
@@ -749,7 +804,7 @@ with size n). If omitted, the model&#8217;s defaults are used.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_nodes.GetLID">
-<code class="descclassname">nest.lib.hl_api_nodes.</code><code class="descname">GetLID</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_nodes.html#GetLID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_nodes.GetLID" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_nodes.</code><code class="descname">GetLID</code><span class="sig-paren">(</span><em>gid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_nodes.html#GetLID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_nodes.GetLID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the local id of a node with gid.
 GetLID(gid) -&gt; lid</p>
 </dd></dl>
@@ -775,25 +830,25 @@ GetLID(gid) -&gt; lid</p>
 <p>Functions for parallel computing</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_parallel_computing.NumProcesses">
-<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">NumProcesses</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#NumProcesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.NumProcesses" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">NumProcesses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#NumProcesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.NumProcesses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the overall number of MPI processes.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_parallel_computing.Rank">
-<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">Rank</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#Rank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.Rank" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">Rank</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#Rank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.Rank" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the MPI rank of the local process.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_parallel_computing.SetAcceptableLatency">
-<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">SetAcceptableLatency</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#SetAcceptableLatency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.SetAcceptableLatency" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">SetAcceptableLatency</code><span class="sig-paren">(</span><em>port</em>, <em>latency</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#SetAcceptableLatency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.SetAcceptableLatency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the acceptable latency (in ms) for a MUSIC port.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_parallel_computing.SetNumRecProcesses">
-<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">SetNumRecProcesses</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#SetNumRecProcesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.SetNumRecProcesses" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_parallel_computing.</code><code class="descname">SetNumRecProcesses</code><span class="sig-paren">(</span><em>nrp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_parallel_computing.html#SetNumRecProcesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_parallel_computing.SetNumRecProcesses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the number of recording MPI processes to nrp. Usually,
 spike detectors are distributed over all processes and record
 from local neurons only. If a number of processes is dedicated to
@@ -822,19 +877,19 @@ processes and records globally from all simulating processes.</p>
 <p>Functions for simulation control</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.DisableStructuralPlasticity">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">DisableStructuralPlasticity</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#DisableStructuralPlasticity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.DisableStructuralPlasticity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">DisableStructuralPlasticity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#DisableStructuralPlasticity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.DisableStructuralPlasticity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disable structural plasticity for the network simulation</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.EnableStructuralPlasticity">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">EnableStructuralPlasticity</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#EnableStructuralPlasticity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.EnableStructuralPlasticity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">EnableStructuralPlasticity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#EnableStructuralPlasticity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.EnableStructuralPlasticity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable structural plasticity for the network simulation</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.GetKernelStatus">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">GetKernelStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#GetKernelStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.GetKernelStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">GetKernelStatus</code><span class="sig-paren">(</span><em>keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#GetKernelStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.GetKernelStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain parameters of the simulation kernel.</p>
 <p>Returns:
 - Parameter dictionary if called without argument
@@ -844,13 +899,13 @@ processes and records globally from all simulating processes.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.GetStructuralPlasticityStatus">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">GetStructuralPlasticityStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#GetStructuralPlasticityStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.GetStructuralPlasticityStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">GetStructuralPlasticityStatus</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#GetStructuralPlasticityStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.GetStructuralPlasticityStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current structural plasticity parameters for the network simulation</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.Install">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">Install</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#Install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.Install" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">Install</code><span class="sig-paren">(</span><em>module_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#Install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.Install" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a dynamically linked NEST module.</p>
 <p>Example:
 nest.Install(&#8220;mymodule&#8221;)</p>
@@ -862,7 +917,7 @@ LD_LIBRARY_PATH (DYLD_LIBRARY_PATH under OSX).</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.ResetKernel">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResetKernel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResetKernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResetKernel" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResetKernel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResetKernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResetKernel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the simulation kernel. This will destroy the network as
 well as all custom models created with CopyModel(). Calling this
 function is equivalent to restarting NEST.</p>
@@ -870,31 +925,31 @@ function is equivalent to restarting NEST.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.ResetNetwork">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResetNetwork</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResetNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResetNetwork" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResetNetwork</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResetNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResetNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset all nodes and connections to their original state.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.ResumeSimulation">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResumeSimulation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResumeSimulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResumeSimulation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">ResumeSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#ResumeSimulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.ResumeSimulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resume an interrupted simulation.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.SetKernelStatus">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">SetKernelStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#SetKernelStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.SetKernelStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">SetKernelStatus</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#SetKernelStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.SetKernelStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set parameters for the simulation kernel.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.SetStructuralPlasticityStatus">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">SetStructuralPlasticityStatus</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#SetStructuralPlasticityStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.SetStructuralPlasticityStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">SetStructuralPlasticityStatus</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#SetStructuralPlasticityStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.SetStructuralPlasticityStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set structural plasticity parameters for the network simulation</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_simulation.Simulate">
-<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">Simulate</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#Simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.Simulate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_simulation.</code><code class="descname">Simulate</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_simulation.html#Simulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_simulation.Simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate the network for t milliseconds.</p>
 </dd></dl>
 
@@ -919,7 +974,7 @@ function is equivalent to restarting NEST.</p>
 <p>Functions for hierarchical networks</p>
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.BeginSubnet">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">BeginSubnet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#BeginSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.BeginSubnet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">BeginSubnet</code><span class="sig-paren">(</span><em>label=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#BeginSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.BeginSubnet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new subnet and change into it. A string argument can be
 used to name the new subnet A dictionary argument can be used to
 set the subnet&#8217;s custom dict.</p>
@@ -927,25 +982,25 @@ set the subnet&#8217;s custom dict.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.ChangeSubnet">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">ChangeSubnet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#ChangeSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.ChangeSubnet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">ChangeSubnet</code><span class="sig-paren">(</span><em>subnet</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#ChangeSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.ChangeSubnet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make subnet the current subnet.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.CurrentSubnet">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">CurrentSubnet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#CurrentSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.CurrentSubnet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">CurrentSubnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#CurrentSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.CurrentSubnet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the global id of the current subnet.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.EndSubnet">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">EndSubnet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#EndSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.EndSubnet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">EndSubnet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#EndSubnet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.EndSubnet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change to the parent subnet and return the gid of the current.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.GetChildren">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetChildren</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetChildren"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetChildren" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetChildren</code><span class="sig-paren">(</span><em>subnets</em>, <em>properties=None</em>, <em>local_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetChildren"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetChildren" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the global ids of the immediate children of the given subnets.</p>
 <dl class="docutils">
 <dt>If properties is given, it must be a dictionary. Only global ids of nodes </dt>
@@ -962,7 +1017,7 @@ slow down the script.</dd>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.GetLeaves">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetLeaves</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetLeaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetLeaves" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetLeaves</code><span class="sig-paren">(</span><em>subnets</em>, <em>properties=None</em>, <em>local_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetLeaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetLeaves" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the global ids of the leaf nodes of the given subnets.</p>
 <p>Leaf nodes are all nodes that are not subnets.</p>
 <dl class="docutils">
@@ -980,7 +1035,7 @@ slow down the script.</dd>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.GetNetwork">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetNetwork</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetNetwork" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetNetwork</code><span class="sig-paren">(</span><em>gid</em>, <em>depth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a nested list with the children of subnet id at level
 depth. If depth==0, the immediate children of the subnet are
 returned. The returned list is depth+1 dimensional.</p>
@@ -988,7 +1043,7 @@ returned. The returned list is depth+1 dimensional.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.GetNodes">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetNodes</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetNodes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">GetNodes</code><span class="sig-paren">(</span><em>subnets</em>, <em>properties=None</em>, <em>local_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#GetNodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.GetNodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the global ids of the all nodes of the given subnets.</p>
 <dl class="docutils">
 <dt>If properties is given, it must be a dictionary. Only global ids of nodes </dt>
@@ -1005,7 +1060,7 @@ slow down the script.</dd>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.LayoutNetwork">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">LayoutNetwork</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#LayoutNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.LayoutNetwork" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">LayoutNetwork</code><span class="sig-paren">(</span><em>model</em>, <em>dim</em>, <em>label=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#LayoutNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.LayoutNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a subnetwork of dimension dim with nodes of type model and
 return a list of ids. params is a dictionary, which will be set as
 customdict of the newly created subnet. It is not the parameters
@@ -1014,7 +1069,7 @@ for the neurons in the subnetwork.</p>
 
 <dl class="function">
 <dt id="nest.lib.hl_api_subnets.PrintNetwork">
-<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">PrintNetwork</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#PrintNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.PrintNetwork" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nest.lib.hl_api_subnets.</code><code class="descname">PrintNetwork</code><span class="sig-paren">(</span><em>depth=1</em>, <em>subnet=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nest/lib/hl_api_subnets.html#PrintNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nest.lib.hl_api_subnets.PrintNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the network tree up to depth, starting at subnet. if
 subnet is omitted, the current subnet is used instead.</p>
 </dd></dl>
